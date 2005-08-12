@@ -1,0 +1,162 @@
+--- /var/www/html/wiki14org/includes/SpecialUserlogin.php	2005-03-16 18:13:26.000000000 -0600
++++ /var/www/html/wiki14/includes/SpecialUserlogin.php	2005-04-09 17:20:00.385756476 -0500
+@@ -31,16 +31,19 @@
+  */
+ class LoginForm {
+ 	var $mName, $mPassword, $mRetype, $mReturnto, $mCookieCheck, $mPosted;
+ 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
+ 	var $mLoginattempt, $mRemember, $mEmail;
++	var $mDomain;
+ 	
+ 	function LoginForm( &$request ) {
+ 		global $wgLang, $wgAllowRealName, $wgEnableEmail;
++		global $wgAuth;
+ 
+ 		$this->mName = $request->getText( 'wpName' );
+ 		$this->mPassword = $request->getText( 'wpPassword' );
++                $this->mDomain = $request->getText( 'wpDomain' );
+ 		$this->mRetype = $request->getText( 'wpRetype' );
+ 		$this->mReturnto = $request->getVal( 'returnto' );
+ 		$this->mCookieCheck = $request->getVal( 'wpCookieCheck' );
+ 		$this->mPosted = $request->wasPosted();
+ 		$this->mCreateaccount = $request->getCheck( 'wpCreateaccount' );
+@@ -61,10 +64,15 @@
+ 		    $this->mRealName = $request->getText( 'wpRealName' );
+ 		} else {
+ 		    $this->mRealName = '';
+ 		}
+ 	    
++                if ( !$wgAuth->validDomain($this->mDomain) ) {
++                        $this->mDomain = 'invaliddomain';
++                }
++                $wgAuth->setDomain($this->mDomain);
++
+ 		# When switching accounts, it sucks to get automatically logged out
+ 		if( $this->mReturnto == $wgLang->specialPage( 'Userlogout' ) ) {
+ 			$this->mReturnto = '';
+ 		}
+ 	}
+@@ -126,10 +134,14 @@
+ 	 * @access private
+ 	 */
+ 	function addNewAccount() {
+ 		global $wgUser, $wgOut;
+ 
++                if ( '' == $this->mPassword ) {
++                        return $this->mainLoginForm( wfMsg( 'blankpasswordnotallowed', $error ) );
++                }
++
+ 		$u = $this->addNewAccountInternal();
+ 
+ 		if ($u == NULL) {
+ 			return;
+ 		}
+@@ -151,10 +163,23 @@
+ 	 */
+ 	function addNewAccountInternal() {
+ 		global $wgUser, $wgOut;
+ 		global $wgMaxNameChars, $wgUseLatin1;
+ 		global $wgMemc, $wgAccountCreationThrottle, $wgDBname, $wgIP;
++		global $wgAuth;
++
++                //If we are not allowing users to login locally, we should
++                //be checking to see if the user is actually able to
++                //authenticate to the authentication server before they
++                //create an account (otherwise, they can create an account
++                //and login as any domain user).
++                if ('local' != $this->mDomain && '' != $this->mDomain) {
++                        if ( $wgAuth->userExists($this->mName) && !$wgAuth->authenticate($this->mName, $this->mPassword) ) {
++                               $this->mainLoginForm( wfMsg( 'wrongpassword' ) );
++                                return false;
++                        }
++                }
+ 
+ 		if (!$wgUser->isAllowedToCreateAccount()) {
+ 			$this->userNotPrivilegedMessage();
+ 			return;
+ 		}
+@@ -197,10 +222,14 @@
+ 				$this->throttleHit( $wgAccountCreationThrottle );
+ 				return;
+ 			}
+ 		}
+ 
++                if (!$wgAuth->addUser( $u, $this->mPassword )) {
++                        $this->mainLoginForm( wfMsg( 'externaldberror' ) );
++                }
++
+ 		return $this->initUser( $u );
+ 	}
+ 	
+ 	/**
+ 	 * Actually add a user to the database.
+@@ -230,10 +259,11 @@
+ 	/**
+ 	 * @access private
+ 	 */
+ 	function processLogin() {
+ 		global $wgUser;
++		global $wgAuth;
+ 
+ 		if ( '' == $this->mName ) {
+ 			$this->mainLoginForm( wfMsg( 'noname' ) );
+ 			return;
+ 		}
+@@ -241,11 +271,10 @@
+ 		if( is_null( $u ) ) {
+ 			$this->mainLoginForm( wfMsg( 'noname' ) );
+ 			return;
+ 		}
+ 		if ( 0 == $u->getID() ) {
+-			global $wgAuth;
+ 			/**
+ 			 * If the external authentication plugin allows it,
+ 			 * automatically create a new account for users that
+ 			 * are externally defined but have not yet logged in.
+ 			 */
+@@ -275,10 +304,12 @@
+ 		} else {
+ 			$r = 0;
+ 		}
+ 		$u->setOption( 'rememberpassword', $r );
+ 
++                $wgAuth->updateUser( $u );
++
+ 		$wgUser = $u;
+ 		$wgUser->setCookies();
+ 
+ 		$wgUser->saveSettings();
+ 		
+@@ -385,10 +416,11 @@
+ 	 * @access private
+ 	 */
+ 	function mainLoginForm( $err ) {
+ 		global $wgUser, $wgOut, $wgLang;
+ 		global $wgDBname, $wgAllowRealName, $wgEnableEmail;
++		global $wgAuth;
+ 
+ 		if ( '' == $this->mName ) {
+ 			if ( 0 != $wgUser->getID() ) {
+ 				$this->mName = $wgUser->getName();
+ 			} else {
+@@ -409,18 +441,20 @@
+ 		$template->set( 'name', $this->mName );
+ 		$template->set( 'password', $this->mPassword );
+ 		$template->set( 'retype', $this->mRetype );
+ 		$template->set( 'email', $this->mEmail );
+ 		$template->set( 'realname', $this->mRealName );
++                $template->set( 'domain', $this->mDomain );
+ 
+ 		$template->set( 'action', $titleObj->getLocalUrl( $q ) );
+ 		$template->set( 'error', $err );
+ 		$template->set( 'create', $wgUser->isAllowedToCreateAccount() );
+ 		$template->set( 'createemail', $wgEnableEmail && $wgUser->getID() != 0 );
+ 		$template->set( 'userealname', $wgAllowRealName );
+ 		$template->set( 'useemail', $wgEnableEmail );
+ 		$template->set( 'remember', $wgUser->getOption( 'rememberpassword' ) );
++                $wgAuth->modifyUITemplate($template);
+ 		
+ 		$wgOut->setPageTitle( wfMsg( 'userlogin' ) );
+ 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+ 		$wgOut->setArticleRelated( false );
+ 		$wgOut->addTemplate( $template );

@@ -1,0 +1,37 @@
+--- /var/www/html/wiki14org/includes/templates/Userlogin.php	2005-01-21 14:00:10.000000000 -0600
++++ /var/www/html/wiki14/includes/templates/Userlogin.php	2005-04-09 17:22:01.708893669 -0500
+@@ -43,10 +43,25 @@
+ 					value="1" id="wpRemember"
+ 					<?php if( $this->data['remember'] ) { ?>checked="checked"<?php } ?>
+ 					/><label for="wpRemember"><?php $this->msg('remembermypassword') ?></label>
+ 			</td>
+ 		</tr>
++        <?php if( $this->data['usedomain'] ) {
++                         $doms = "";
++                         foreach ($this->data['domainnames'] as $dom) {
++                                  $doms = $doms . "<option>$dom</option>";
++                         }
++        ?>
++                <tr>
++                        <td align='right'><?php $this->msg('yourdomainname') ?>:</td>
++                        <td align='left'>
++                                <select tabindex='11' name="wpDomain" value="<?php $this->text('domain') ?>">
++                                <?php echo $doms ?>
++                                </select>
++                        </td>
++                </tr>
++        <?php } ?>
+ 	<?php if( $this->data['create'] ) { ?>
+ 		<tr>
+ 			<td colspan='3'>&nbsp;</td>
+ 		</tr>
+ 		<tr>
+@@ -104,6 +119,6 @@
+ <?php
+ 		$this->msgWiki( 'loginend' );
+ 	}
+ }
+ 
+-?>
+\ No newline at end of file
++?>

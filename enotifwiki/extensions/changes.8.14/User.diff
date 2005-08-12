@@ -1,0 +1,17 @@
+--- /var/www/html/wiki14org/includes/User.php	2005-03-16 01:49:03.000000000 -0600
++++ /var/www/html/wiki14/includes/User.php	2005-04-09 17:21:15.973008089 -0500
+@@ -1056,10 +1056,14 @@
+ 	 * Check to see if the given clear-text password is one of the accepted passwords
+ 	 * @param string $password User password.
+ 	 * @return bool True if the given password is correct otherwise False.
+ 	 */
+ 	function checkPassword( $password ) {
++                if( '' == $password ) {
++                        return false;
++                }
++
+ 		$this->loadFromDatabase();
+ 		
+ 		global $wgAuth;
+ 		if( $wgAuth->authenticate( $this->getName(), $password ) ) {
+ 			return true;
