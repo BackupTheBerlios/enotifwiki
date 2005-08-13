@@ -886,9 +886,8 @@ if( count( $errs ) ) {
 		</ul>
 	</dd>
 	<dt>
-		<p>
-		E-mail address authentication uses a scheme to authenticate e-mail addresses of the users. The user who initially enters or changes his/her stored e-mail address
-		gets a link with a token mailed to that address. The stored e-mail address is authenticated at the moment the user comes back to the wiki via the link.<p>
+		<p>E-mail address authentication uses a scheme to authenticate e-mail addresses of the users. The user who initially enters or changes his/her stored e-mail address
+		gets a link with a token mailed to that address. The stored e-mail address is authenticated at the moment the user comes back to the wiki via the link.</p>
 
 		<p>The e-mail address stays authenticated as long as the user does not change it; the time of authentication is indicated
 		on the user preference page.</p>

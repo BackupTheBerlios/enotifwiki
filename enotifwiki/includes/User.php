@@ -1145,7 +1145,7 @@ class User {
 					'wl_title' => $title->getDBkey(),
 					'wl_namespace' => $Ns,
 					'wl_user' => $this->getId()
-				), 'User::clearNotification'
+				), 'User::checkNotificationPendingForArticleOrTalk'
 		);
 		if ( $s === false ) {
 			return false;
@@ -1198,7 +1198,7 @@ class User {
 						'wl_title' => $title->getDBkey(),
 						'wl_namespace' => $title->getNamespace(),
 						'wl_user' => $this->getID()
-					), 'User::clearLastVisited'
+					), 'User::clearNotification'
 			);
 		}
 	}

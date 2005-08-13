@@ -177,18 +177,7 @@ class EmailNotification {
 	var $to, $subject, $body, $replyto, $from;
 	var $user, $title, $timestamp, $summary, $minorEdit, $oldid;
 	
-	/**#@-*/
-
-	/**
-	 * @todo document
-	 * @param $currentPage
-	 * @param $currentNs
-	 * @param $timestamp
-	 * @param $currentSummary
-	 * @param $currentMinorEdit
-	 * @param $oldid (default: false)
-	 */
-	function NotifyOnPageChangeOrNewpage(&$title, $timestamp, $currentTitleObj, $minorEdit, $pageeditorUserObj, $summary, $oldid=false) {
+	function notifyOnPageChangeOrNewpage(&$title, $timestamp, $summary, $minorEdit, $oldid=false) {
 
 		# we use $wgEmergencyContact as sender's address
 		global $wgUser, $wgLang, $wgEmergencyContact;
@@ -200,12 +189,9 @@ class EmailNotification {
 		global $wgEnotifFromEditor;
 		global $wgShowUpdatedMarker;
 
-		$currentPage = $currentTitleObj->getDBKey();
-		$currentNs = $currentTitleObj->getNamespace();
-
 		$initialised = false;
 
-		$fname = 'UserMailer::notifyOnPageChange';
+		$fname = 'UserMailer::notifyOnPageChangeOrNewpage';
 		wfProfileIn( $fname );
 
 		# The following code is only run, if several conditions are met:
@@ -218,14 +204,14 @@ class EmailNotification {
 
 		if ( ($enotifusertalkpage || $enotifwatchlistpage) && (!$minorEdit || $wgEnotifMinorEdits) ) {
 			$dbr =& wfGetDB( DB_MASTER );
-			$alwaysnotify = ($wgEnotifForAnyChange) ? '' : " AND ".$dbr->wl_notificationtimestampIsNULL() ;
-			$res = $dbr->select( 'watchlist',
-					'wl_user',
-					"wl_title ='".$dbr->strencode($currentPage).
-					"' AND wl_namespace ='".$currentNs.
-					"' AND wl_user <>". $wgUser->getID() .
-					$alwaysnotify,
-					$fname );
+			$alwaysnotify = ($wgEnotifForAnyChange) ? '' : $dbr->wl_notificationtimestampIsNULL() ;
+			$res = $dbr->select( 'watchlist', array( 'wl_user' ),
+				array(
+					'wl_title' => $title->getDBkey(),
+					'wl_namespace' => $title->getNamespace(),
+					'wl_user <> ' . $wgUser->getID(),
+					$alwaysnotify
+				), $fname );
 
 			# if anyone is watching ... set up the email message text which is
 			# common for all receipients ...
@@ -268,8 +254,8 @@ class EmailNotification {
 							'wl_notificationtimestamp' => wfTimestamp(TS_MW, $timestamp),
 							'wl_lastvisitedrevision' => $oldid
 						), array( /* WHERE */
-							'wl_title' => $currentPage,
-							'wl_namespace' => $currentNs,
+							'wl_title' => $title->getDBkey(),
+							'wl_namespace' => $title->getNamespace(),
 							'wl_user' => $wuser->wl_user
 						), $fname
 					);
@@ -303,8 +289,8 @@ class EmailNotification {
 				$enotiftimestamp = $dbr->selectField( 'watchlist',
 						'wl_notificationtimestamp',
 						array (
-							'wl_title' 	=> $currentPage,
-							'wl_namespace'	=> $currentNs,
+							'wl_title' 	=> $title->getDBkey(),
+							'wl_namespace'	=> $title_>getNamespace(),
 							'wl_user' 	=> $wuser->user_id
 						),
 						$fname );

@@ -5,7 +5,7 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 
 *************************************************************************
 *									*
-*	MediaWiki 1.5beta4 CVS special edition EnotifWiki 3.47		*
+*	MediaWiki 1.5beta4 CVS special edition EnotifWiki 3.48		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0 FC	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -13,10 +13,10 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 *************************************************************************
 *************************************************************************
 *									*
-*	CVS REL1_5 as on 11.08.2005 23:00 UTC 				*
+*	CVS REL1_5 as on 13.08.2005 19:00 UTC 				*
 *	AutoLogin v1.1							*
 *									*
-* 	(C) T. Gries 07.2005						*
+* 	(C) T. Gries 08.2005						*
 *									*
 *	Enotif adds e-mail notification to MediaWiki and		*
 *	sends customized e-mails to watching users			*
@@ -144,6 +144,12 @@ Executive summary for the impatient reader:
   (in Recent Changes and Page History views). With the TS-improvement,
   the (notification) time information is no longer exact for the single
   user.
+
+v3.48
+* maintenance release CVS update 200508131900
+* user- and user-talk pages were not automatically added to the
+  watchlist, which also influenced the correct display of newmessage
+  marker, when both pages had changes (solved)
 
 v3.47
 * maintenance release CVS update 200508112300
@@ -1047,8 +1053,11 @@ of MediaWiki:Newpagetext) to &action=edit, if page is new.
 * (bug 3117) Fix display of upload size and type with tidy on
 * (bug 1487) invalid html on empty list in banlist
 * (bug 3017) Hotkey conflict for delete and show changes
-* made pixel unit translateable and blocklistline now eats infiniteblock and expiringblock
-
+* made pixel unit translateable and blocklistline now eats infiniteblock
+  and expiringblock
+* (bug 3092) Wrong numerical separator for big numbers in Serbian.
+* (bug 2855) Credit for a uniq author showed its realname even with
+  $wgAllowRealName=false.
 
 === Caveats ===
 

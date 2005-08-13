@@ -2079,18 +2079,18 @@ class Article {
 			# If nothing is pending, then we clear the newtalk flag
 
 			if ( $this->mTitle->getText() == $wgUser->getName() ) {
-				if ( (	($this->mTitle->getNamespace() == NS_USER_TALK) &&
-					(!$wgUser->checkNotificationPendingForArticleOrTalk($this->mTitle, NS_USER, $lvr )) )
+				if ( ( ( $this->mTitle->getNamespace() == NS_USER_TALK ) &&
+					( !$wgUser->checkNotificationPendingForArticleOrTalk($this->mTitle, NS_USER, $lvr ) ) )
 					 ||
-				     (	($this->mTitle->getNamespace() == NS_USER) &&
-					(!$wgUser->checkNotificationPendingForArticleOrTalk($this->mTitle, NS_USER_TALK, $lvr)) ) ) {
+				     (	( $this->mTitle->getNamespace() == NS_USER ) &&
+					( !$wgUser->checkNotificationPendingForArticleOrTalk($this->mTitle, NS_USER_TALK, $lvr )) ) ) {
 					$wgUser->setNewtalk(0);
 					$wgUser->saveNewtalk();
 				}
 			}
 		} else {
-			if ($this->mTitle->getNamespace() == NS_USER_TALK &&
-				$this->mTitle->getText() == $wgUser->getName()) {
+			if ( $this->mTitle->getNamespace() == NS_USER_TALK &&
+				$this->mTitle->getText() == $wgUser->getName() ) {
 				$wgUser->setNewtalk(0);
 				$wgUser->saveNewtalk();
 			}
@@ -2138,8 +2138,8 @@ class Article {
 			# If this is another user's page or talk page, update newtalk
 
 			global $wgShowNewtalkForUserOrUserTalkPage;
-			if ( ( ($this->mTitle->getNamespace() == NS_USER_TALK) ||
-				($wgShowNewtalkForUserOrUserTalkPage && ($this->mTitle->getNamespace() == NS_USER) ) ) &&
+			if ( ( ( $this->mTitle->getNamespace() == NS_USER_TALK ) ||
+				( $wgShowNewtalkForUserOrUserTalkPage && ($this->mTitle->getNamespace() == NS_USER) ) ) &&
 				$shortTitle != $wgUser->getName() ) {
 				$other = User::newFromName($shortTitle);
 				if( is_null( $other ) && User::isIP( $shortTitle ) ) {
@@ -2148,6 +2148,7 @@ class Article {
 					$other->setName( $shortTitle );
 				}
 				if( $other ) {
+					$other->addWatch( $this->mTitle );
 					$other->setNewtalk(1);
 					$other->saveNewtalk();
 				}

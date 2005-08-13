@@ -66,29 +66,45 @@ class WatchedItem {
 	function addWatch() {
 		$fname = 'WatchedItem::addWatch';
 		wfProfileIn( $fname );
-		# REPLACE instead of INSERT because occasionally someone
-		# accidentally reloads a watch-add operation.
+		# when addWatch() is called, potentially pending notifications must be preserved
+		# article and talk pages are separately checked for their presence in the watchlist table
+		# and missing entry/ies is/are safely added
+		# reminder: since enotif, each page has its own entry in table watchlist to record the notification-
+		# timestamps separately. Tom Gries
 		$dbw =& wfGetDB( DB_MASTER );
-		$dbw->replace( 'watchlist', array(array('wl_user', 'wl_namespace', 'wl_title', 'wl_notificationtimestamp', 'wl_lastvisitedrevision' )),
+		$dbr =& wfGetDB( DB_MASTER );
+		extract( $dbr->tableNames( 'watchlist' ) );
+		$res = $dbr->selectRow( 'watchlist', array( 'wl_user' ),
+			array(
+				'wl_user' => $this->id,
+				'wl_namespace' => ( $this->ns & ~1 ),
+				'wl_title' => $this->ti
+			), $fname );
+		if ( !$res ) {
+		$dbw->replace( 'watchlist', array(array('wl_user', 'wl_namespace', 'wl_title', 'wl_notificationtimestamp')),
+		  array(
+		    	'wl_user' => $this->id,
+			'wl_namespace' => ( $this->ns & ~1 ),
+			'wl_title' => $this->ti,
+			'wl_notificationtimestamp' => '0'
+		  ), $fname );
+		}
+
+		$res = $dbr->selectRow( 'watchlist', array( 'wl_user' ),
+			array(
+				'wl_user' => $this->id,
+				'wl_namespace' => ( $this->ns | 1 ),
+				'wl_title' => $this->ti,
+			), $fname );
+		if ( !$res ) {
+		$dbw->replace( 'watchlist', array(array('wl_user', 'wl_namespace', 'wl_title', 'wl_notificationtimestamp')),
 		  array(
 		    'wl_user' => $this->id,
-			'wl_namespace' => ($this->ns & ~1),
+			'wl_namespace' => ( $this->ns | 1 ),
 			'wl_title' => $this->ti,
-			'wl_notificationtimestamp' => $dbw->timestampOrNull(),
-			'wl_lastvisitedrevision' => 0
+			'wl_notificationtimestamp' => '0'
 		  ), $fname );
-
-		# the following code compensates the new behaviour, introduced by the enotif patch,
-		# that every single watched page needs now to be listed in watchlist
-		# namespace:page and namespace_talk:page need separate entries: create them
-		$dbw->replace( 'watchlist', array(array('wl_user', 'wl_namespace', 'wl_title', 'wl_notificationtimestamp', 'wl_lastvisitedrevision' )),
-		  array(
-			'wl_user' => $this->id,
-			'wl_namespace' => ($this->ns | 1 ),
-			'wl_title' => $this->ti,
-			'wl_notificationtimestamp' => $dbw->timestampOrNull(),
-			'wl_lastvisitedrevision' => 0
-		  ), $fname );
+		}
 
 		global $wgMemc;
 		$wgMemc->set( $this->watchkey(), 1 );

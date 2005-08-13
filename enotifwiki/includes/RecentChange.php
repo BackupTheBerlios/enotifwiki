@@ -229,7 +229,7 @@ class RecentChange
 
 		include_once( "UserMailer.php" );
 		$wgEnotif = new EmailNotification ();
-		$wgEnotif->NotifyOnPageChangeOrNewpage( $title, $timestamp, $title, $minor, $user, $comment, $oldId );
+		$wgEnotif->notifyOnPageChangeOrNewpage( $title, $timestamp, $comment, $minor, $oldId );
 	}
 
 	# Makes an entry in the database corresponding to page creation
@@ -277,7 +277,7 @@ class RecentChange
 
 		include_once( "UserMailer.php" );
 		$wgEnotif = new EmailNotification ();
-		$wgEnotif->NotifyOnPageChangeOrNewpage( $title, $timestamp, $title, $minor, $user, $comment, 0);
+		$wgEnotif->notifyOnPageChangeOrNewpage( $title, $timestamp, $comment, $minor, 0);
 	}
 
 	# Makes an entry in the database corresponding to a rename
