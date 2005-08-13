@@ -150,6 +150,7 @@ v3.48
 * user- and user-talk pages were not automatically added to the
   watchlist, which also influenced the correct display of newmessage
   marker, when both pages had changes (solved)
+* upgraded to final release of FCKeditor 2.0 http://www.fckeditor.net
 
 v3.47
 * maintenance release CVS update 200508112300

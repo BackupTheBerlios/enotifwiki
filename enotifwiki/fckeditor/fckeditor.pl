@@ -102,7 +102,7 @@ sub IsCompatible
 		$iVersion = substr($sAgent,index($sAgent,'Gecko/') + 6,8);
 		return($iVersion >= 20030210) ;
 	} else {
-		return(1);
+		return(0);		# 2.0 PR fix
 	}
 }
 

@@ -1,19 +1,9 @@
 <cfsetting enablecfoutputonly="true" showdebugoutput="false">
-<!---
- * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2005 Frederico Caldeira Knabben
- * 
- * Licensed under the terms of the GNU Lesser General Public License:
- * 		http://www.opensource.org/licenses/lgpl-license.php
- * 
- * For further information visit:
- * 		http://www.fckeditor.net/
- * 
- * File Name: sample01.cfm
- * 	Sample page for ColdFusion.
- * 
- * File Authors:
- * 		Hendrik Kramer (hk@lwd.de)
+<!--- @Packager.Header
+<FileDescription>
+	Sample page for ColdFusion.
+</FileDescription>
+<Author name="Hendrik Kramer" email="hk@lwd.de" />
 --->
 
 <!--- ::
@@ -61,7 +51,7 @@ ColdFusion is a registered trademark and product of <a href="http://www.macromed
 	template="../../fckeditor.cfm"
 	basePath="/fckeditor/"
 	instanceName="myEditor"
-	value='This is some sample text. You are using <a href="http://fckeditor.net/" target="_blank">FCKEditor</a>.'
+	value='This is some sample text. You are using <a href="http://fckeditor.net/" target="_blank">FCKeditor</a>.'
 	width="100%"
 	height="200"
 >

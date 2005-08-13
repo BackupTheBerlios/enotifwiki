@@ -17,7 +17,41 @@
 #  		Takashi Yamaguchi (jack@omakase.net)
 #####
 
+## START: Hack for Windows (Not important to understand the editor code... Perl specific).
+if(Windows_check()) {
+	chdir(GetScriptPath($0));
+}
+
+sub Windows_check
+{
+	# IIS,PWS(NT/95)
+	$www_server_os = $^O;
+	# Win98 & NT(SP4)
+	if($www_server_os eq "") { $www_server_os= $ENV{'OS'}; }
+	# AnHTTPd/Omni/IIS
+	if($ENV{'SERVER_SOFTWARE'} =~ /AnWeb|Omni|IIS\//i) { $www_server_os= 'win'; }
+	# Win Apache
+	if($ENV{'WINDIR'} ne "") { $www_server_os= 'win'; }
+	if($www_server_os=~ /win/i) { return(1); }
+	return(0);
+}
+
+sub GetScriptPath {
+	local($path) = @_;
+	if($path =~ /[\:\/\\]/) { $path =~ s/(.*?)[\/\\][^\/\\]+$/$1/; } else { $path = '.'; }
+	$path;
+}
+## END: Hack for IIS
+
 require '../../fckeditor.pl';
+
+# When $ENV{'PATH_INFO'} cannot be used by perl.
+# $DefRootPath = "/XXXXX/_samples/perl/sample03.cgi"; Please write in script.
+
+my $DefServerPath = "";
+my $ServerPath;
+
+	$ServerPath = &GetServerPath();
 
 	if($ENV{'REQUEST_METHOD'} eq "POST") {
 		read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'});
@@ -85,7 +119,7 @@ _HTML_TAG_
 	#// This is usefull only for these samples. A real application should use something like this:
 	#// $oFCKeditor->BasePath = '/FCKeditor/' ;	// '/FCKeditor/' is the default value.
 
-	$sBasePath = $ENV{'PATH_INFO'};
+	$sBasePath = $ServerPath;
 	$sBasePath = substr($sBasePath, 0, index( $sBasePath, "_samples" ));
 
 	&FCKeditor('FCKeditor1') ;
@@ -104,3 +138,22 @@ _HTML_TAG_
 	</body>
 </html>
 _HTML_TAG_
+
+################
+#Please use this function, rewriting it depending on a server's environment.
+################
+sub GetServerPath
+{
+my $dir;
+
+	if($DefServerPath) {
+		$dir = $DefServerPath;
+	} else {
+		if($ENV{'PATH_INFO'}) {
+			$dir  = $ENV{'PATH_INFO'};
+		} elsif($ENV{'FILEPATH_INFO'}) {
+			$dir  = $ENV{'FILEPATH_INFO'};
+		}
+	}
+	return($dir);
+}

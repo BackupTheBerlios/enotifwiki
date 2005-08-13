@@ -17,6 +17,32 @@
 #  		Takashi Yamaguchi (jack@omakase.net)
 #####
 
+## START: Hack for Windows (Not important to understand the editor code... Perl specific).
+if(Windows_check()) {
+	chdir(GetScriptPath($0));
+}
+
+sub Windows_check
+{
+	# IIS,PWS(NT/95)
+	$www_server_os = $^O;
+	# Win98 & NT(SP4)
+	if($www_server_os eq "") { $www_server_os= $ENV{'OS'}; }
+	# AnHTTPd/Omni/IIS
+	if($ENV{'SERVER_SOFTWARE'} =~ /AnWeb|Omni|IIS\//i) { $www_server_os= 'win'; }
+	# Win Apache
+	if($ENV{'WINDIR'} ne "") { $www_server_os= 'win'; }
+	if($www_server_os=~ /win/i) { return(1); }
+	return(0);
+}
+
+sub GetScriptPath {
+	local($path) = @_;
+	if($path =~ /[\:\/\\]/) { $path =~ s/(.*?)[\/\\][^\/\\]+$/$1/; } else { $path = '.'; }
+	$path;
+}
+## END: Hack for IIS
+
 require '../../fckeditor.pl';
 
 	if($ENV{'REQUEST_METHOD'} eq "POST") {

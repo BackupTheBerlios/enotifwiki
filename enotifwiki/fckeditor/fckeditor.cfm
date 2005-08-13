@@ -1,32 +1,22 @@
 <cfsetting enablecfoutputonly="Yes">
-<!---
- * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2005 Frederico Caldeira Knabben
- * 
- * Licensed under the terms of the GNU Lesser General Public License:
- * 		http://www.opensource.org/licenses/lgpl-license.php
- * 
- * For further information visit:
- * 		http://www.fckeditor.net/
- * 
- * File Name: fckeditor.cfm
- * 	ColdFusion integration. 
- * 	Note this module is created for use with Coldfusion 4.52 and above.
- * 	For a cfc version for coldfusion mx check the fckeditor.cfc.
- * 
- * 	Syntax: 
- * 
- * 	<cfmodule name="path/to/cfc/fckeditor" 
- * 		instanceName="myEditor"
- * 		toolbarSet="..."
- * 		width="..."
- * 		height="..:"
- * 		value="..."
- * 		config="..." 
- * 	>
- * 
- * File Authors:
- * 		Hendrik Kramer (hk@lwd.de)
+<!--- @Packager.Header
+<FileDescription>
+	ColdFusion integration. 
+	Note this module is created for use with Coldfusion 4.52 and above.
+	For a cfc version for coldfusion mx check the fckeditor.cfc.
+
+	Syntax: 
+
+	&lt;cfmodule name="path/to/cfc/fckeditor" 
+		instanceName="myEditor"
+		toolbarSet="..."
+		width="..."
+		height="..:"
+		value="..."
+		config="..." 
+	&gt;
+</FileDescription>
+<Author name="Hendrik Kramer" email="hk@lwd.de" />
 --->
 <!--- ::
 	 * 	Attribute validation

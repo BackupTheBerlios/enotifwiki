@@ -1,47 +1,37 @@
-<cfcomponent output="false" displayname="FCKEditor" hint="Create an instance of the FCKEditor.">
-<!---
- * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2005 Frederico Caldeira Knabben
- * 
- * Licensed under the terms of the GNU Lesser General Public License:
- * 		http://www.opensource.org/licenses/lgpl-license.php
- * 
- * For further information visit:
- * 		http://www.fckeditor.net/
- * 
- * File Name: fckeditor.cfc
- * 	ColdFusion MX integration. 
- * 	Note this CFC is created for use only with Coldfusion MX and above.
- * 	For older version, check the fckeditor.cfm.
- * 
- * 	Syntax: 
- * 
- * 	<cfscript>
- * 			fckEditor = createObject("component", "fckEditorV2/fckeditor");
- * 			fckEditor.instanceName="myEditor";
- * 			fckEditor.basePath="/fckEditorV2/";
- * 			fckEditor.value="This is my <strong>initial</strong> html text.";
- * 			fckEditor.width="100%";
- * 			fckEditor.height="200";
- * 		 	// ... additional parameters ...
- * 			fckEditor.create(); // create instance now.
- * 	</cfscript>
- * 
- * 	See your macromedia coldfusion mx documentation for more info.
- * 
- * 	*** Note: 
- * 	Do not use path names with a "." (dot) in the name. This is a coldfusion 
- * 	limitation with the cfc invocation.
- * 
- * File Authors:
- * 		Hendrik Kramer (hk@lwd.de)
+<cfcomponent output="false" displayname="FCKeditor" hint="Create an instance of the FCKeditor.">
+<!--- @Packager.Header
+<FileDescription>
+	ColdFusion MX integration. 
+	Note this CFC is created for use only with Coldfusion MX and above.
+	For older version, check the fckeditor.cfm.
+
+	Syntax: 
+
+	&lt;cfscript&gt;
+			fckEditor = createObject("component", "fckEditorV2/fckeditor");
+			fckEditor.instanceName="myEditor";
+			fckEditor.basePath="/fckEditorV2/";
+			fckEditor.value="This is my &lt;strong&gt;initial&lt;/strong&gt; html text.";
+			fckEditor.width="100%";
+			fckEditor.height="200";
+		 	// ... additional parameters ...
+			fckEditor.create(); // create instance now.
+	&lt;/cfscript&gt;
+
+	See your macromedia coldfusion mx documentation for more info.
+
+	*** Note: 
+	Do not use path names with a "." (dot) in the name. This is a coldfusion 
+	limitation with the cfc invocation.
+</FileDescription>
+<Author name="Hendrik Kramer" email="hk@lwd.de" />
 --->
 <cffunction 
 	name="create" 
 	access="public" 
 	output="true" 
 	returntype="void" 
-	hint="Initialize the FCKEditor instance."
+	hint="Initialize the FCKeditor instance."
 >
 
 	<cfparam name="this.instanceName" type="string" />

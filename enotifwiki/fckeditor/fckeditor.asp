@@ -60,7 +60,11 @@ Class FCKeditor
 	End Property
 
 	Public Property Let Value( newValue )
-		sValue = newValue
+		If ( IsNull( newValue ) OR IsEmpty( newValue ) ) Then
+			sValue = ""
+		Else
+			sValue = newValue
+		End If
 	End Property
 
 	Public Property Let Config( configKey, configValue )
