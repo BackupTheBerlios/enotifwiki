@@ -1,5 +1,5 @@
 <?php
-# $Header: /home/xubuntu/berlios_backup/github/tmp-cvs/enotifwiki/Repository/enotifwiki/maintenance/namespace2sql.php,v 1.2 2005/08/13 19:49:45 wikinaut Exp $
+# $Header: /home/xubuntu/berlios_backup/github/tmp-cvs/enotifwiki/Repository/enotifwiki/maintenance/namespace2sql.php,v 1.3 2005/08/13 20:19:23 wikinaut Exp $
 #
 # Print SQL to insert namespace names into database.
 # This source code is in the public domain.

@@ -204,14 +204,22 @@ class EmailNotification {
 
 		if ( ($enotifusertalkpage || $enotifwatchlistpage) && (!$minorEdit || $wgEnotifMinorEdits) ) {
 			$dbr =& wfGetDB( DB_MASTER );
-			$alwaysnotify = ($wgEnotifForAnyChange) ? '' : $dbr->wl_notificationtimestampIsNULL() ;
-			$res = $dbr->select( 'watchlist', array( 'wl_user' ),
-				array(
-					'wl_title' => $title->getDBkey(),
-					'wl_namespace' => $title->getNamespace(),
-					'wl_user <> ' . $wgUser->getID(),
-					$alwaysnotify
-				), $fname );
+			if ($wgEnotifForAnyChange) {
+				$res = $dbr->select( 'watchlist', array( 'wl_user' ),
+					array(
+						'wl_title' => $title->getDBkey(),
+						'wl_namespace' => $title->getNamespace(),
+						'wl_user <> ' . $wgUser->getID()
+					), $fname );
+			} else {
+				$res = $dbr->select( 'watchlist', array( 'wl_user' ),
+					array(
+						'wl_title' => $title->getDBkey(),
+						'wl_namespace' => $title->getNamespace(),
+						'wl_user <> ' . $wgUser->getID(),
+						$dbr->wl_notificationtimestampIsNULL()
+					), $fname );
+			}
 
 			# if anyone is watching ... set up the email message text which is
 			# common for all receipients ...

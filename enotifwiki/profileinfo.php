@@ -21,7 +21,7 @@
      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
      SOFTWARE.
 
-     $Id: profileinfo.php,v 1.2 2005/08/13 19:49:45 wikinaut Exp $
+     $Id: profileinfo.php,v 1.3 2005/08/13 20:19:23 wikinaut Exp $
 -->
 <html>
 <head>
