@@ -298,7 +298,7 @@ class EmailNotification {
 						'wl_notificationtimestamp',
 						array (
 							'wl_title' 	=> $title->getDBkey(),
-							'wl_namespace'	=> $title_>getNamespace(),
+							'wl_namespace'	=> $title->getNamespace(),
 							'wl_user' 	=> $wuser->user_id
 						),
 						$fname );

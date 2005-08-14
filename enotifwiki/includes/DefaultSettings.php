@@ -28,7 +28,7 @@ require_once( 'includes/SiteConfiguration.php' );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.5beta4 (CVS 200508131900) special version EnotifWiki v3.48 + FCKeditor 2.0';
+$wgVersion			= '1.5beta4 (CVS 200508131900) special version EnotifWiki v3.48a + FCKeditor 2.0';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -1154,7 +1154,7 @@ $wgCheckCopyrightUpload = true;
  * database hits, which can have a not insignificant impact on performance for
  * large wikis.
  */
-$wgMaxCredits = 0;
+$wgMaxCredits = 1;
 
 /** If there are more than $wgMaxCredits authors, show $wgMaxCredits of them.
  * Otherwise, link to a separate credits page. */

@@ -5,7 +5,7 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 
 *************************************************************************
 *									*
-*	MediaWiki 1.5beta4 CVS special edition EnotifWiki 3.48		*
+*	MediaWiki 1.5beta4 CVS special edition EnotifWiki 3.48a		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0 FC	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -116,6 +116,7 @@ Executive summary for the impatient reader:
 * (bug 952) table user got new columns user_email_confirmed, user_email_token, user_email_token_expires
 * (bug 959) Email addresses need to be checked before storing in database to comply with [http://www.faqs.org/rfcs/rfc2822.html RFC-2822] '''(OPEN)'''
 * (bug 1116) E-mail notification for page changes or new pages, where title or body or category matches a regular expression '''(OPEN)'''
+* (bug 1125) FCKeditor 2.0 (WYSIWYG) editor integration (OK)
 * (bug 1360) Auto-Login / Auto-Account creation v1.1 (OK)
 * (bug 1363) Enotif Reset Nofication Flags does not work (OK)
 * (bug 1370) ENotif mails are not automatically reenabled after sent when watching users visits watched and notified page (OK)
@@ -144,6 +145,11 @@ Executive summary for the impatient reader:
   (in Recent Changes and Page History views). With the TS-improvement,
   the (notification) time information is no longer exact for the single
   user.
+
+v3.48a
+* bug in UserMailer line 301 (fixed)
+* new defaultsettings:
+  $wgMaxCredits = 1
 
 v3.48
 * maintenance release CVS update 200508131900
