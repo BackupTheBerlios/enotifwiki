@@ -5,7 +5,7 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 
 *************************************************************************
 *									*
-*	MediaWiki 1.5beta4 CVS special edition EnotifWiki 3.48a		*
+*	MediaWiki 1.5beta4 CVS special edition EnotifWiki 3.48b		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0 FC	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -145,6 +145,10 @@ Executive summary for the impatient reader:
   (in Recent Changes and Page History views). With the TS-improvement,
   the (notification) time information is no longer exact for the single
   user.
+
+
+v3.48b
+* (bug 3162) undefined variable and property in mediawiki fixed
 
 v3.48a
 * bug in UserMailer line 301 (fixed)
