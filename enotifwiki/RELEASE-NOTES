@@ -5,7 +5,7 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 
 *************************************************************************
 *									*
-*	MediaWiki 1.5beta4 CVS special edition EnotifWiki 3.48b		*
+*	MediaWiki 1.5beta4 CVS special edition EnotifWiki 3.49		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0 FC	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -13,7 +13,7 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 *************************************************************************
 *************************************************************************
 *									*
-*	CVS REL1_5 as on 13.08.2005 19:00 UTC 				*
+*	CVS REL1_5 as on 17.08.2005 23:45 UTC 				*
 *	AutoLogin v1.1							*
 *									*
 * 	(C) T. Gries 08.2005						*
@@ -146,6 +146,8 @@ Executive summary for the impatient reader:
   the (notification) time information is no longer exact for the single
   user.
 
+v3.49
+* maintenance release CVS update 200508172345
 
 v3.48b
 * (bug 3162) undefined variable and property in mediawiki fixed
@@ -1069,6 +1071,14 @@ of MediaWiki:Newpagetext) to &action=edit, if page is new.
 * (bug 3092) Wrong numerical separator for big numbers in Serbian.
 * (bug 2855) Credit for a uniq author showed its realname even with
   $wgAllowRealName=false.
+* New special page: SpecialMostlinked
+* (bug 2393) Fix MIME type for Atom feeds ( application/rss+atom )
+* Fix display of read-only lockfile message
+* Added a new hook, 'AddNewAccount', which is run after account creation
+* Update all stats fields on recount.sql
+* Include software-visible client IP address in Special:Version comment
+  as a proxy debugging aid
+* (bug 3162) Fix 'undefined property page_is_new' error on watchlist
 
 === Caveats ===
 

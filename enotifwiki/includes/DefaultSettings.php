@@ -28,7 +28,7 @@ require_once( 'includes/SiteConfiguration.php' );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.5beta4 (CVS 200508131900) special version EnotifWiki v3.48b + FCKeditor 2.0';
+$wgVersion			= '1.5beta4 (CVS 200508172345) special version EnotifWiki v3.49 + FCKeditor 2.0';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -1584,6 +1584,12 @@ $wgCountCategorizedImagesAsUsed = false;
  * CAUTION: Access to database might lead to code execution
  */
 $wgExternalStores = false;
+
+/**
+ * An array of external mysql servers, e.g.
+ * $wgExternalServers = array( 'cluster1' => array( 'srv28', 'srv29', 'srv30' ) );
+ */
+$wgExternalServers = array();
 
 /**
 * list of trusted media-types and mime types.

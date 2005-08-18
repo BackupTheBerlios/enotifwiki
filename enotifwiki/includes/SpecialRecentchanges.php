@@ -139,15 +139,15 @@ function wfSpecialRecentchanges( $par, $specialPage ) {
 
 	// Perform query
 	if ( $wgRCShowCurrentRevisionOnly && $wgUser->getOption('rccurrevonly') ) {
-		$sql2 = "SELECT *" . ($uid ? ",wl_user,wl_notificationtimestamp,wl_lastvisitedrevision" : "") . " FROM $recentchanges,$page " .
+		$sql2 = "SELECT $recentchanges.*" . ($uid ? ",wl_user,wl_notificationtimestamp,wl_lastvisitedrevision" : "") . " FROM $recentchanges,$page " .
 		  ($uid ? "LEFT OUTER JOIN $watchlist ON wl_user={$uid} AND wl_title=rc_title AND wl_namespace=rc_namespace " : "") .
-		  "WHERE rc_timestamp > '{$cutoff}' {$hidem} AND rc_this_oldid=page_latest
-		  ORDER BY rc_timestamp DESC LIMIT {$limit}";
-
+		  "WHERE rc_timestamp > '{$cutoff}' {$hidem} AND rc_this_oldid=page_latest " .
+		  "ORDER BY rc_timestamp DESC LIMIT {$limit}";
 	} else {
-		$sql2 = "SELECT *" . ($uid ? ",wl_user,wl_notificationtimestamp,wl_lastvisitedrevision" : "") . " FROM $recentchanges " .
+		$sql2 = "SELECT $recentchanges.*" . ($uid ? ",wl_user,wl_notificationtimestamp,wl_lastvisitedrevision" : "") . " FROM $recentchanges " .
 		  ($uid ? "LEFT OUTER JOIN $watchlist ON wl_user={$uid} AND wl_title=rc_title AND wl_namespace=rc_namespace " : "") .
-		  "WHERE rc_timestamp > '{$cutoff}' {$hidem} ORDER BY rc_timestamp DESC LIMIT {$limit}";
+		  "WHERE rc_timestamp > '{$cutoff}' {$hidem} " .
+		  "ORDER BY rc_timestamp DESC LIMIT {$limit}";
 	}
 	$res = $dbr->query( $sql2, $fname );
 

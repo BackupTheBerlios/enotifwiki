@@ -213,9 +213,10 @@ function wfSpecialWatchlist( $par ) {
 	}
 
 	$header .= wfMsg( 'watchdetails', $wgLang->formatNum( $nitems ) );
-###	$header .= wfMsg( 'watchdetails', $wgLang->formatNum( $nitems / 2 ),
-### bug 3162	$wgLang->formatNum( $npages ), $y,
-### bug 3162	$specialTitle->getFullUrl( 'edit=yes' ) );
+	# TODO: Consider removing the third parameter
+	$header .= wfMsg( 'watchdetails', $wgLang->formatNum( $nitems ),
+		$wgLang->formatNum( $npages ), '',
+		$specialTitle->getFullUrl( 'edit=yes' ) );
 	$wgOut->addWikiText( $header );
 
 
