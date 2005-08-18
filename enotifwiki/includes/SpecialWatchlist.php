@@ -212,7 +212,6 @@ function wfSpecialWatchlist( $par ) {
 		$header .= wfMsg( 'wlheader-showupdated' ) . "\n";
 	}
 
-	$header .= wfMsg( 'watchdetails', $wgLang->formatNum( $nitems ) );
 	# TODO: Consider removing the third parameter
 	$header .= wfMsg( 'watchdetails', $wgLang->formatNum( $nitems ),
 		$wgLang->formatNum( $npages ), '',
