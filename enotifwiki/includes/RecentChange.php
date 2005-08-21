@@ -69,6 +69,7 @@ class RecentChange
 		$rc->loadFromCurRow( $row, $rc_this_oldid );
 		$rc->notificationtimestamp = false;
 		$rc->numberofWatchingusers = false;
+		$rc->lastvisitedrevision = false;
 		return $rc;
 	}
 
