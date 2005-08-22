@@ -82,7 +82,7 @@ function wfRFC822Phrase( $phrase ) {
  */
 function userMailer( $to, $from, $subject, $body, $replyto=false ) {
 	global $wgUser, $wgSMTP, $wgOutputEncoding, $wgErrorString, $wgEmergencyContact;
-	
+
 	if (is_array( $wgSMTP )) {
 		require_once( 'Mail.php' );
 
@@ -93,6 +93,7 @@ function userMailer( $to, $from, $subject, $body, $replyto=false ) {
 			$headers['Reply-To'] = $replyto;
 		}
 		$headers['Subject'] = $subject;
+		$headers['Date'] = date('r');
 		$headers['MIME-Version'] = '1.0';
 		$headers['Content-type'] = 'text/plain; charset='.$wgOutputEncoding;
 		$headers['Content-transfer-encoding'] = '8bit';
@@ -115,10 +116,11 @@ function userMailer( $to, $from, $subject, $body, $replyto=false ) {
 		# In the following $headers = expression we removed "Reply-To: {$from}\r\n" , because it is treated differently
 		# (fifth parameter of the PHP mail function, see some lines below)
 		$headers =
+			'Date: ' . date('r') . "\n" .
 			"MIME-Version: 1.0\n" .
 			"Content-type: text/plain; charset={$wgOutputEncoding}\n" .
 			"Content-Transfer-Encoding: 8bit\n" .
-			"X-Mailer: MediaWiki mailer\n".
+			"X-Mailer: MediaWiki mailer\n" .
 			'From: ' . $from . "\n";
 		if ($replyto) {
 			$headers .= "Reply-To: $replyto\n";
@@ -366,8 +368,8 @@ class EmailNotification {
 		# However, in the case of a new page which is already watched, we have no previous version to compare
 
 		if( $this->oldid ) {
-			$difflink = $this->title->getFullUrl( 'diff=0&oldid=' . $this->oldid );
-			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastvisited', $difflink );
+			# MediaWiki REL1_5 $difflink = $this->title->getFullUrl( 'diff=0&oldid=' . $this->oldid );
+			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastvisited' );
 			$keys['$OLDID']   = $this->oldid;
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'changed' );
 		} else {
@@ -380,8 +382,10 @@ class EmailNotification {
 		$body = strtr( $body, $keys );
 		$pagetitle = $this->title->getPrefixedText();
 
+		# MediaWiki REL1_5 $keys['$PAGETITLE_URL']      = $this->title->getFullUrl();
+		$keys['%24PAGETITLE_URL']    = $this->title->getPrefixedUrl();
+		$keys['%24PAGETITLE']        = $pagetitle;
 		$keys['$PAGETITLE']          = $pagetitle;
-		$keys['$PAGETITLE_URL']      = $this->title->getFullUrl();
 
 		$keys['$PAGEMINOREDIT']      = $medit;
 		$keys['$PAGESUMMARY']        = $summary;
@@ -414,16 +418,19 @@ class EmailNotification {
 			$anonUrl = wfUrlencode( $name ) . ' (anonymous user)';
 			$subject = str_replace('$PAGEEDITOR', 'anonymous user '. $name, $subject);
 
-			$keys['$PAGEEDITOR']       = 'anonymous user ' . $name;
-			$keys['$PAGEEDITOR_EMAIL'] = wfMsgForContent( 'noemailtitle' );
+			$keys['$PAGEEDITOR'] = 'anonymous user ' . $name;
+			$keys['$MAIL'] = wfMsgForContent( 'noemailtitle' );
+			# MediaWiki REL1_5 $keys['$PAGEEDITOR_EMAIL'] = wfMsgForContent( 'noemailtitle' );
 		} else {
 			$subject = str_replace('$PAGEEDITOR', $name, $subject);
-			$keys['$PAGEEDITOR']          = $name;
+			$keys['$PAGEEDITOR'] = $name;
 			$emailPage = Title::makeTitle( NS_SPECIAL, 'Emailuser/' . $name );
-			$keys['$PAGEEDITOR_EMAIL'] = $emailPage->getFullUrl();
+			$keys['$MAIL'] = str_replace( '%24PAGEEDITOR_EMAIL', $emailPage->getPrefixedUrl(), wfMsgForContent( 'enotif_wikimailtext' ) );
+			# MediaWiki REL1_5 $keys['$PAGEEDITOR_EMAIL_URL'] = $emailPage->getFullUrl();
 		}
 		$userPage = $wgUser->getUserPage();
-		$keys['$PAGEEDITOR_WIKI'] = $userPage->getFullUrl();
+		$keys['%24PAGEEDITOR_WIKI'] = $userPage->getPrefixedUrl();
+		# MediaWiki REL1_5 $keys['$PAGEEDITOR_WIKI'] = $userPage->getFullUrl();
 		$body = strtr( $body, $keys );
 
 		$body = wordwrap( $body, 72 );

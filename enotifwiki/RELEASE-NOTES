@@ -5,7 +5,7 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 
 *************************************************************************
 *									*
-*	MediaWiki 1.5beta4 CVS special edition EnotifWiki 3.49b		*
+*	MediaWiki 1.5beta4 CVS special edition EnotifWiki 3.50		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0 FC	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -145,6 +145,11 @@ Executive summary for the impatient reader:
   (in Recent Changes and Page History views). With the TS-improvement,
   the (notification) time information is no longer exact for the single
   user.
+
+v3.50
+* (bug  3211) e-mails miss the date (fixed)
+* reestablished the possibility to have fixed server address part in URLs
+  in enotifs ( {{SERVER}} or http://my.domain.tld )
 
 v3.49b
 * undefined property in Special:Recentchangeslinked (solved)
