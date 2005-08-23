@@ -22,11 +22,6 @@ if( defined( 'MEDIAWIKI' ) ) {
 # Language-specific text
 #--------------------------------------------------------------------------
 
-# The names of the namespaces can be set here, but the numbers
-# are magical, so don't change or move them!  The Namespace class
-# encapsulates some of the magic-ness.
-#
-
 if($wgMetaNamespace === FALSE)
 	$wgMetaNamespace = str_replace( ' ', '_', $wgSitename );
 
@@ -393,7 +388,6 @@ and the [http://meta.wikipedia.org/wiki/MediaWiki_User%27s_Guide User's Guide] f
 'article'		=> 'Content page',
 'help'			=> 'Help',
 'helppage'		=> 'Help:Contents',
-'wikititlesuffix' => '{{SITENAME}}',
 'bugreports'	=> 'Bug reports',
 'bugreportspage' => 'Project:Bug_reports',
 'sitesupport'   => 'Donations',
@@ -438,7 +432,7 @@ and the [http://meta.wikipedia.org/wiki/MediaWiki_User%27s_Guide User's Guide] f
 'info_short'	=> 'Information',
 'printableversion' => 'Printable version',
 'print' => 'Print',
-'edit' => 'Edit this page',
+'edit' => 'Edit',
 'editthispage'	=> 'Edit this page',
 'delete' => 'Delete',
 'deletethispage' => 'Delete this page',
@@ -620,7 +614,7 @@ Your account has been created. Don't forget to change your {{SITENAME}} preferen
 'yourdomainname'       => 'Your domain',
 'externaldberror'      => 'There was either an external authentication database error or you are not allowed to update your external account.',
 'loginproblem'	=> '<b>There has been a problem with your login.</b><br />Try again!',
-'alreadyloggedin' => "<font color=red><b>User $1, you are already logged in!</b></font><br />\n",
+'alreadyloggedin' => "<strong>User $1, you are already logged in!</strong><br />\n",
 
 'login'			=> 'Log in',
 'loginprompt'           => "You must have cookies enabled to log in to {{SITENAME}}.",
@@ -743,7 +737,7 @@ If you are here by mistake, just click your browser's '''back''' button.",
 'talkpagetext' => '<!-- MediaWiki:talkpagetext -->',
 'anontalkpagetext' => "----''This is the discussion page for an anonymous user who has not created an account yet or who does not use it. We therefore have to use the numerical [[IP address]] to identify him/her. Such an IP address can be shared by several users. If you are an anonymous user and feel that irrelevant comments have been directed at you, please [[Special:Userlogin|create an account or log in]] to avoid future confusion with other anonymous users.'' ",
 'noarticletext' => '(There is currently no text in this page)',
-'clearyourcache' => "'''Note:''' After saving, you have to clear your browser cache to see the changes: '''Mozilla:''' click ''Reload'' (or ''Ctrl-R''), '''IE / Opera:''' ''Ctrl-F5'', '''Safari:''' ''Cmd-R'', '''Konqueror''' ''Ctrl-R''.",
+'clearyourcache' => "'''Note:''' After saving, you may have to bypass your browser's cache to see the changes. '''Mozilla / Firefox / Safari:''' hold down ''Shift'' while clicking ''Reload'', or press ''Ctrl-Shift-R'' (''Cmd-Shift-R'' on Apple Mac); '''IE:''' hold ''Ctrl'' while clicking ''Refresh'', or press ''Ctrl-F5''; '''Konqueror:''': simply click the ''Reload'' button, or press ''F5''; '''Opera''' users may need to completely clear their cache in ''Tools&rarr;Preferences''.",
 'usercssjsyoucanpreview' => "<strong>Tip:</strong> Use the 'Show preview' button to test your new CSS/JS before saving.",
 'usercsspreview' => "'''Remember that you are only previewing your user CSS, it has not yet been saved!'''",
 'userjspreview' => "'''Remember that you are only testing/previewing your user JavaScript, it has not yet been saved!'''",
@@ -1260,7 +1254,7 @@ Future changes to this page and its associated Talk page will be listed there,
 and the page will appear '''bolded''' in the [[Special:Recentchanges|list of recent changes]] to
 make it easier to pick out.
 
-<p>If you want to remove the page from your watchlist later, click \"Stop watching\" in the sidebar.",
+<p>If you want to remove the page from your watchlist later, click \"Unwatch\" in the sidebar.",
 'removedwatch'		=> 'Removed from watchlist',
 'removedwatchtext' 	=> "The page \"$1\" has been removed from your watchlist.",
 'watch' => 'Watch',
@@ -1295,24 +1289,24 @@ at the bottom of the screen (deleting a content page also deletes the accompanyi
 'updatedmarker_tooltiptext' => 'Show difference between the current and the last visited revision of',
 'enotif_mailer' 		=> '{{SITENAME}} Notification Mailer',
 'enotif_reset'			=> 'Mark all pages visited',
-'enotif_newpagetext'=> 'This is a new page.',
-'enotif_wikimailtext' => '{{SERVER}}{{localurl:$PAGEEDITOR_EMAIL}}',
+'enotif_newpagetext'		=> 'This is a new page.',
 'changed'			=> 'changed',
 'created'			=> 'created',
-'enotif_subject' 	=> '{{SITENAME}} page $PAGETITLE has been $CHANGEDORCREATED by $PAGEEDITOR',
-'enotif_to' 	=> '$WATCHINGUSERNAME_QP <$WATCHINGUSEREMAILADDR>',
-'enotif_lastvisited' => 'See {{SERVER}}{{localurl:$PAGETITLE_URL|diff=0&oldid=$OLDID}} for all changes since your last visit.',
+'enotif_server' 		=> '{{SERVER}}',
+'enotif_subject' 		=> '{{SITENAME}} page $PAGETITLE has been $CHANGEDORCREATED by $PAGEEDITOR',
+'enotif_to' 			=> '$WATCHINGUSERNAME_QP <$WATCHINGUSEREMAILADDR>',
+'enotif_lastvisited' 		=> 'See $1 for all changes since your last visit.',
 'enotif_body' => 'Dear $WATCHINGUSERNAME,
 
-the {{SITENAME}} page $PAGETITLE has been $CHANGEDORCREATED on $PAGEEDITDATE by $PAGEEDITOR, see {{SERVER}}{{localurl:$PAGETITLE_URL}} for the current version.
+the {{SITENAME}} page $PAGETITLE has been $CHANGEDORCREATED on $PAGEEDITDATE by $PAGEEDITOR, see $PAGETITLE_URL for the current version.
 
 $NEWPAGE
 
 Editor\'s summary: $PAGESUMMARY $PAGEMINOREDIT
 
 Contact the editor:
-mail: $MAIL
-wiki: {{SERVER}}{{localurl:$PAGEEDITOR_WIKI}}
+mail: $PAGEEDITOR_EMAIL
+wiki: $PAGEEDITOR_WIKI
 
 There will be no other notifications in case of further changes unless you visit this page. You could also reset the notification flags for all your watched pages on your watchlist.
 
@@ -1320,10 +1314,10 @@ There will be no other notifications in case of further changes unless you visit
 
 --
 To change your watchlist settings, visit
-{{SERVER}}{{localurl:Special:Watchlist/edit}}
+$SERVER{{localurl:Special:Watchlist/edit}}
 
 Feedback and further assistance:
-{{SERVER}}{{localurl:Help:Contents}}',
+$SERVER{{localurl:Help:Contents}}',
 
 # Delete/protect/revert
 #
@@ -2121,7 +2115,7 @@ ta[\'ca-nstab-category\'] = new Array(\'c\',\'View the category page\');
 'edit-externally' => 'Edit this file using an external application',
 'edit-externally-help' => 'See the [http://meta.wikimedia.org/wiki/Help:External_editors setup instructions] for more information.',
 
-# 'all' in various places, this might be different for inflicted languages
+# 'all' in various places, this might be different for inflected languages
 'recentchangesall' => 'all',
 'imagelistall' => 'all',
 'watchlistall1' => 'all',
@@ -2135,8 +2129,8 @@ before using e-mail features. Activate the button below to send a confirmation
 mail to your address. The mail will include a link containing a code; load the
 link in your browser to confirm that your e-mail address is valid.",
 'confirmemail_send' => 'Mail a confirmation code',
-'confirmemail_sent' => 'Confirmation e-mail sent.',
-'confirmemail_sendfailed' => 'Could not send confirmation mail due to misconfigured server or invalid characters in e-mail address.',
+'confirmemail_sent' => 'Confirmation e-mail sent to $1.',
+'confirmemail_sendfailed' => 'Could not send confirmation mail due to misconfigured server or invalid characters in e-mail address. Error sending mail: $1',
 'confirmemail_invalid' => 'Invalid confirmation code. The code may have expired.',
 'confirmemail_success' => 'Your e-mail address has been confirmed. You may now log in and enjoy the wiki.',
 'confirmemail_loggedin' => 'Your e-mail address has now been confirmed.',
@@ -2167,7 +2161,7 @@ will expire at $4.
 
 # Trackbacks
 'trackbackbox' => "<div id='mw_trackbacks'>
-Trackbacks for this article:<br/>
+Trackbacks for this article:<br />
 $1
 </div>
 ",
@@ -2178,6 +2172,7 @@ $1
 'trackbackdeleteok' => 'The trackback was successfully deleted.',
 
 'unit-pixel' => 'px',
+
 );
 
 /* a fake language converter */
@@ -2550,21 +2545,6 @@ class Language {
 			default: return $this->time( $ts, $adj, $datePreference, $timecorrection ) . ', ' .
 				$this->date( $ts, $adj, $datePreference, $timecorrection );
 		}
-	}
-
-	function getValidSpecialPages() {
-		global $wgValidSpecialPagesEn;
-		return $wgValidSpecialPagesEn;
-	}
-
-	function getSysopSpecialPages() {
-		global $wgSysopSpecialPagesEn;
-		return $wgSysopSpecialPagesEn;
-	}
-
-	function getDeveloperSpecialPages() {
-		global $wgDeveloperSpecialPagesEn;
-		return $wgDeveloperSpecialPagesEn;
 	}
 
 	function getMessage( $key ) {

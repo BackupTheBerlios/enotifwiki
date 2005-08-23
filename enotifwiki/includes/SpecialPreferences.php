@@ -68,6 +68,7 @@ class PreferencesForm {
 		$this->mAction = $request->getVal( 'action' );
 		$this->mReset = $request->getCheck( 'wpReset' );
 		$this->mPosted = $request->wasPosted();
+		$this->mSuccess = $request->getCheck( 'success' );
 
 		$this->mSaveprefs = $request->getCheck( 'wpSaveprefs' ) &&
 			$this->mPosted &&
@@ -115,7 +116,7 @@ class PreferencesForm {
 		}
 		if ( $this->mReset ) {
 			$this->resetPrefs();
-			$this->mainPrefsForm( wfMsg( 'prefsreset' ) );
+			$this->mainPrefsForm( 'reset', wfMsg( 'prefsreset' ) );
 		} else if ( $this->mSaveprefs ) {
 			$this->savePreferences();
 		} else {
@@ -199,21 +200,21 @@ class PreferencesForm {
 
 		if ( '' != $this->mNewpass ) {
 			if ( $this->mNewpass != $this->mRetypePass ) {
-				$this->mainPrefsForm( wfMsg( 'badretype' ) );
+				$this->mainPrefsForm( 'error', wfMsg( 'badretype' ) );
 				return;
 			}
 
 			if ( strlen( $this->mNewpass ) < $wgMinimalPasswordLength ) {
-				$this->mainPrefsForm( wfMsg( 'passwordtooshort', $wgMinimalPasswordLength ) );
+				$this->mainPrefsForm( 'error', wfMsg( 'passwordtooshort', $wgMinimalPasswordLength ) );
 				return;
 			}
 
 			if (!$wgUser->checkPassword( $this->mOldpass )) {
-				$this->mainPrefsForm( wfMsg( 'wrongpassword' ) );
+				$this->mainPrefsForm( 'error', wfMsg( 'wrongpassword' ) );
 				return;
 			}
 			if (!$wgAuth->setPassword( $wgUser, $this->mNewpass )) {
-				$this->mainPrefsForm( wfMsg( 'externaldberror' ) );
+				$this->mainPrefsForm( 'error', wfMsg( 'externaldberror' ) );
 				return;
 			}
 			$wgUser->setPassword( $this->mNewpass );
@@ -222,6 +223,13 @@ class PreferencesForm {
 		if (!$wgAutoLogin) {
  		$wgUser->setRealName( $this->mRealName );
 		}
+
+		if( $wgUser->getOption( 'language' ) !== $this->mUserLanguage ) {
+			$needRedirect = true;
+		} else {
+			$needRedirect = false;
+		}
+
 		$wgUser->setOption( 'language', $this->mUserLanguage );
 		$wgUser->setOption( 'variant', $this->mUserVariant );
 		$wgUser->setOption( 'nickname', $this->mNick );
@@ -231,7 +239,7 @@ class PreferencesForm {
 		if( $wgUseTeX ) {
 			$wgUser->setOption( 'math', $this->mMath );
 		}
-		$wgUser->setOption( 'date', $this->validateDate( $this->mDate, 0, 10 ) );
+		$wgUser->setOption( 'date', $this->validateDate( $this->mDate, 0, 20 ) );
 		$wgUser->setOption( 'searchlimit', $this->validateIntOrNull( $this->mSearch ) );
 		$wgUser->setOption( 'contextlines', $this->validateIntOrNull( $this->mSearchLines ) );
 		$wgUser->setOption( 'contextchars', $this->validateIntOrNull( $this->mSearchChars ) );
@@ -270,7 +278,7 @@ class PreferencesForm {
 		$wgUser->setCookies();
 		$wgUser->saveSettings();
 
-		$error = wfMsg( 'savedprefs' );
+		$error = false;
 		if( $wgEnableEmail ) {
 			$newadr = $this->mUserEmail;
 			$oldadr = $wgUser->getEmail();
@@ -292,9 +300,9 @@ class PreferencesForm {
 							$result = $wgUser->sendConfirmationMail();
 							require_once( 'WikiError.php' );
 							if( WikiError::isError( $result ) ) {
-								$error = wfMsg( 'confirmemail_sendfailed' );
+								$error = wfMsg( 'confirmemail_sendfailed', htmlspecialchars( $result->getMessage() ) );
 							} else {
-								$error = wfMsg( 'confirmemail_sent' );
+								$error = wfMsg( 'confirmemail_sent', $wgUser->getName() );
 							}
 						}
 					}
@@ -308,9 +316,15 @@ class PreferencesForm {
 			}
 		}
 
+		if( $needRedirect && $error === false ) {
+			$title =& Title::makeTitle( NS_SPECIAL, "Preferences" );
+			$wgOut->redirect($title->getFullURL('success'));
+			return;
+		}
+
 		$wgOut->setParserOptions( ParserOptions::newFromUser( $wgUser ) );
 		$po = ParserOptions::newFromUser( $wgUser );
-		$this->mainPrefsForm( $error );
+		$this->mainPrefsForm( $error === false ? 'success' : 'error', $error);
 	}
 
 	/**
@@ -397,7 +411,7 @@ class PreferencesForm {
 		$checked = $wgUser->getOption( $tname ) == 1 ? ' checked="checked"' : '';
 		$trailer = $trailer ? $trailer : '';
 		return "<div class='toggle'><input type='checkbox' value='1' id=\"$tname\" name=\"wpOp$tname\"$checked />" .
-			"<span class='toggletext'><label for=\"$tname\">$ttext</label>$trailer</span></div>";
+			" <span class='toggletext'><label for=\"$tname\">$ttext</label>$trailer</span></div>\n";
 	}
 
 	function getToggles( $items ) {
@@ -423,7 +437,7 @@ class PreferencesForm {
 	/**
 	 * @access private
 	 */
-	function mainPrefsForm( $err ) {
+	function mainPrefsForm( $status , $message = '' ) {
 		global $wgUser, $wgOut, $wgLang, $wgContLang, $wgValidSkinNames;
 		global $wgAllowRealName, $wgImageLimits, $wgThumbLimits;
 		global $wgDisableLangConversion;
@@ -440,8 +454,12 @@ class PreferencesForm {
 		$wgOut->setArticleRelated( false );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 
-		if ( '' != $err ) {
-			$wgOut->addHTML( "<p class='error'>" . htmlspecialchars( $err ) . "</p>\n" );
+		if ( $this->mSuccess || 'success' == $status ) {
+			$wgOut->addWikitext( '<span class="preferences-save-success">'. wfMsg( 'savedprefs' ) . "</span>\n----" );
+		} else	if ( 'error' == $status ) {
+			$wgOut->addWikitext( "<span class='error'>" . $message  . "</span>\n----" );
+		} else if ( '' != $status ) {
+			$wgOut->addWikitext( $message . "\n----" );
 		}
 		$uname = $wgUser->getName();
 		$uid = $wgUser->getID();
@@ -826,7 +844,8 @@ class PreferencesForm {
 <option value=\"1\" $s1>$msgUnderlinealways</option>
 <option value=\"2\" $s2>$msgUnderlinedefault</option>
 </select>
-</label></div>
+</label>
+</div>
 ");
 		foreach ( $togs as $tname ) {
 			if( !array_key_exists( $tname, $this->mUsedToggles ) ) {

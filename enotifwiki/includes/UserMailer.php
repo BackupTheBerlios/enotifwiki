@@ -348,6 +348,7 @@ class EmailNotification {
 		global $wgEnotifRevealEditorAddress;
 		global $wgEnotifFromEditor;
 		global $wgNoReplyAddress;
+		global $wgServerName, $wgScript;
 
 		$summary = ($this->summary == '') ? ' - ' : $this->summary;
 		$medit   = ($this->minorEdit) ? wfMsg( 'minoredit' ) : '';
@@ -363,13 +364,19 @@ class EmailNotification {
 		$replyto = ''; /* fail safe */
 		$keys    = array();
 
+		$server = wfMsgForContent( 'enotif_server' );
+		if ( $server =='' ) { $server = $wgServerName; } # fail safe
+		if ( substr( $server, -1) == '/' ) { $server = substr($server, 0, -1); }
+		$keys['$SERVER'] = $server;
+		$serverpath = $server . $wgScript . '/';
+
 		# regarding the use of oldid as an indicator for the last visited version, see also
 		# http://bugzilla.wikipeda.org/show_bug.cgi?id=603 "Delete + undelete cycle doesn't preserve old_id"
 		# However, in the case of a new page which is already watched, we have no previous version to compare
 
 		if( $this->oldid ) {
-			# MediaWiki REL1_5 $difflink = $this->title->getFullUrl( 'diff=0&oldid=' . $this->oldid );
-			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastvisited' );
+			$difflink = $serverpath . $this->title->getPrefixedUrl( 'diff=0&oldid=' . $this->oldid );
+			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastvisited', $difflink );
 			$keys['$OLDID']   = $this->oldid;
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'changed' );
 		} else {
@@ -382,10 +389,8 @@ class EmailNotification {
 		$body = strtr( $body, $keys );
 		$pagetitle = $this->title->getPrefixedText();
 
-		# MediaWiki REL1_5 $keys['$PAGETITLE_URL']      = $this->title->getFullUrl();
-		$keys['%24PAGETITLE_URL']    = $this->title->getPrefixedUrl();
-		$keys['%24PAGETITLE']        = $pagetitle;
 		$keys['$PAGETITLE']          = $pagetitle;
+		$keys['$PAGETITLE_URL']      = $serverpath . $this->title->getPrefixedUrl();
 
 		$keys['$PAGEMINOREDIT']      = $medit;
 		$keys['$PAGESUMMARY']        = $summary;
@@ -419,18 +424,15 @@ class EmailNotification {
 			$subject = str_replace('$PAGEEDITOR', 'anonymous user '. $name, $subject);
 
 			$keys['$PAGEEDITOR'] = 'anonymous user ' . $name;
-			$keys['$MAIL'] = wfMsgForContent( 'noemailtitle' );
-			# MediaWiki REL1_5 $keys['$PAGEEDITOR_EMAIL'] = wfMsgForContent( 'noemailtitle' );
+			$keys['$PAGEEDITOR_EMAIL'] = wfMsgForContent( 'noemailtitle' );
 		} else {
 			$subject = str_replace('$PAGEEDITOR', $name, $subject);
 			$keys['$PAGEEDITOR'] = $name;
 			$emailPage = Title::makeTitle( NS_SPECIAL, 'Emailuser/' . $name );
-			$keys['$MAIL'] = str_replace( '%24PAGEEDITOR_EMAIL', $emailPage->getPrefixedUrl(), wfMsgForContent( 'enotif_wikimailtext' ) );
-			# MediaWiki REL1_5 $keys['$PAGEEDITOR_EMAIL_URL'] = $emailPage->getFullUrl();
+			$keys['$PAGEEDITOR_EMAIL'] = $serverpath . $emailPage->getPrefixedUrl();
 		}
 		$userPage = $wgUser->getUserPage();
-		$keys['%24PAGEEDITOR_WIKI'] = $userPage->getPrefixedUrl();
-		# MediaWiki REL1_5 $keys['$PAGEEDITOR_WIKI'] = $userPage->getFullUrl();
+		$keys['$PAGEEDITOR_WIKI'] = $serverpath . $userPage->getPrefixedUrl();
 		$body = strtr( $body, $keys );
 
 		$body = wordwrap( $body, 72 );

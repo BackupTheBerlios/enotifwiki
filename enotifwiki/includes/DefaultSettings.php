@@ -28,7 +28,7 @@ require_once( 'includes/SiteConfiguration.php' );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.5beta4 (CVS 200508172345) special version EnotifWiki v3.50 + FCKeditor 2.0';
+$wgVersion			= '1.5beta4 (CVS 200508232240) special version EnotifWiki v3.50 + FCKeditor 2.0';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -614,6 +614,14 @@ $wgDebugComments        = false;
 $wgReadOnly             = false;
 $wgLogQueries           = false;
 $wgDebugDumpSql         = false;
+
+/**
+ * Set to an array of log group keys to filenames.
+ * If set, wfDebugLog() output for that group will go to that file instead 
+ * of the regular $wgDebugLogFile. Useful for enabling selective logging
+ * in production.
+ */
+$wgDebugLogGroups       = array();
 
 /**
  * Whether to show "we're sorry, but there has been a database error" pages.
