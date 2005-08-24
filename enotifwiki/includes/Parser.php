@@ -1959,6 +1959,9 @@ class Parser
 				return $wgSitename;
 			case MAG_SERVER:
 				return $wgServer;
+			case MAG_SERVER_EXTERN:
+				$server_extern = wfMsgForContent( 'server_extern' );
+				return ($server_extern == '{{SERVER}}') ? $wgServer : $server_extern;
 			case MAG_SERVERNAME:
 				return $wgServerName;
 			case MAG_SCRIPTPATH:

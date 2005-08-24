@@ -832,7 +832,6 @@ Hier können Sie Seiten markieren, um Sie dann von der Beobachtungsliste zu lös
 'enotif_newpagetext'		=> 'Dies ist eine neue Seite.',
 'changed' 			=> 'geändert',
 'created' 			=> 'neu angelegt',
-'enotif_server' 		=> '{{SERVER}}',
 'enotif_subject' 		=> 'Die {{SITENAME}} Seite $PAGETITLE wurde von $PAGEEDITOR $CHANGEDORCREATED',
 'enotif_lastvisited' => '$1 zeigt alle Änderungen auf einen Blick.',
 'enotif_to' 	=> '$WATCHINGUSERNAME_QP <$WATCHINGUSEREMAILADDR>',
@@ -853,8 +852,8 @@ Es werden solange keine weiteren Benachrichtigungsmails gesendet, bis Sie die Se
              Ihr freundliches {{SITENAME}} Benachrichtigungssystem
 
 ---
-Ihre Beobachtungsliste $SERVER{{localurl:Special:Watchlist/edit}}
-Hilfe zur Benutzung gibt $SERVER{{localurl:WikiHelpdesk}}',
+Ihre Beobachtungsliste {{SERVER_EXTERN}}{{localurl:Special:Watchlist/edit}}
+Hilfe zur Benutzung gibt {{SERVER_EXTERN}}{{localurl:WikiHelpdesk}}',
 
 # Delete/protect/revert
 #

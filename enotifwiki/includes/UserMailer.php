@@ -364,11 +364,7 @@ class EmailNotification {
 		$replyto = ''; /* fail safe */
 		$keys    = array();
 
-		$server = wfMsgForContent( 'enotif_server' );
-		if ( $server =='' ) { $server = $wgServerName; } # fail safe
-		if ( substr( $server, -1) == '/' ) { $server = substr($server, 0, -1); }
-		$keys['$SERVER'] = $server;
-		$serverpath = $server . $wgScript . '/';
+		$serverpath = Parser::getVariableValue( MAG_SERVER_EXTERN ) . $wgScript . '/';
 
 		# regarding the use of oldid as an indicator for the last visited version, see also
 		# http://bugzilla.wikipeda.org/show_bug.cgi?id=603 "Delete + undelete cycle doesn't preserve old_id"

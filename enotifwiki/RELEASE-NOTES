@@ -172,6 +172,8 @@ v3.51
 * integrated the RSS feed reader extension from
   http://meta.wikipedia.org/wiki/User:Mafs/RSS
 * changed version number to MediaWiki1.5rc2
+* (bug 3249) new variable {{SERVER_EXTERN}} and [[MediaWiki:server_extern]]
+  for fixed external wiki server address
 
 v3.50
 * updated to MediaWiki1.5rc1 CVS 200508240100 = MediaWiki1.5rc2
