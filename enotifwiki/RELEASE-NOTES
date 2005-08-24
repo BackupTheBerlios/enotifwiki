@@ -5,7 +5,8 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 
 *************************************************************************
 *									*
-*	MediaWiki 1.5beta4 CVS special edition EnotifWiki 3.50		*
+*	MediaWiki 1.5 release candidate 1 				*
+*	CVS 200508240100 special edition EnotifWiki 3.50		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -34,6 +35,23 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 *  	and see section in the release notes below			*
 *									*
 *************************************************************************
+
+== MediaWiki 1.5 release candidate 1 ==
+
+August 23, 2005
+
+MediaWiki 1.5rc1 is a preview release of the new 1.5 release series.
+Numerous bug fixes since last beta, plus a security fix; see change
+log below for full details.
+
+A flaw in the interaction between extensions and HTML attribute
+sanitization was discovered which could allow unauthorized use
+of offsite resources in style sheets, and possible exploitation
+of a JavaScript injection feature on Microsoft Internet Explorer.
+
+This version expands the returned text and properly checks it
+before output.
+
 
 == MediaWiki 1.5 beta 4 ==
 
@@ -147,7 +165,7 @@ Executive summary for the impatient reader:
   user.
 
 v3.50
-* maintenance release CVS update 200508232240
+* updated to MediaWiki1.5rc1 CVS 200508240100 
 * (bug  3211) e-mails miss the date (fixed)
 * reestablished the possibility to have fixed server address part in URLs
   in enotifs; see page [[MediaWiki:enotif_server]] which has {{SERVER}} as
@@ -1100,6 +1118,10 @@ of MediaWiki:Newpagetext) to &action=edit, if page is new.
 * (bug 3210) Fix Media: links with remote image URL path
 * (bug 3220) Fix escaping of block URLs in Recentchanges
 * (bug 3238): Updated LanguageNn.php for 1_5 branch
+* (bug 3192): properly check 'limit' parameter on Special:Contributions
+* (bug 3244) Fix remote image loading hack, JavaScript injection on MSIE
+* Fix URL sanitization in HTML attributes, which broke in this branch
+
 
 === Caveats ===
 
