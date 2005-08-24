@@ -1214,7 +1214,7 @@ if ( \$wgCommandLineMode ) {
 $editor
 ## extension allows <imagelink>internalimage.png|internal_or_external_link|alt_text</imagelink>
 include(\"extensions/ImageLink.php\");
-
+include(\"extensions/rss.php\");
 ";
 	// Keep things in Unix line endings internally;
 	// the system will write out as local text type.

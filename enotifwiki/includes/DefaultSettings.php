@@ -28,7 +28,7 @@ require_once( 'includes/SiteConfiguration.php' );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.5rc1 (CVS CVS 200508240100) special version EnotifWiki v3.50 + FCKeditor 2.0';
+$wgVersion			= '1.5rc2 (CVS CVS 200508240100) special version EnotifWiki v3.51 + FCKeditor 2.0';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';

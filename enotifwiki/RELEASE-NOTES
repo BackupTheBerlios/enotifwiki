@@ -5,8 +5,8 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 
 *************************************************************************
 *									*
-*	MediaWiki 1.5 release candidate 1 				*
-*	CVS 200508240100 special edition EnotifWiki 3.50		*
+*	MediaWiki 1.5 release candidate 2 				*
+*	CVS 200508240100 special edition EnotifWiki 3.51		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -35,6 +35,10 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 *  	and see section in the release notes below			*
 *									*
 *************************************************************************
+
+== MediaWiki 1.5 release candidate 2 ==
+
+   equals except for the version number
 
 == MediaWiki 1.5 release candidate 1 ==
 
@@ -164,8 +168,13 @@ Executive summary for the impatient reader:
   the (notification) time information is no longer exact for the single
   user.
 
+v3.51
+* integrated the RSS feed reader extension from
+  http://meta.wikipedia.org/wiki/User:Mafs/RSS
+* changed version number to MediaWiki1.5rc2
+
 v3.50
-* updated to MediaWiki1.5rc1 CVS 200508240100 
+* updated to MediaWiki1.5rc1 CVS 200508240100 = MediaWiki1.5rc2
 * (bug  3211) e-mails miss the date (fixed)
 * reestablished the possibility to have fixed server address part in URLs
   in enotifs; see page [[MediaWiki:enotif_server]] which has {{SERVER}} as
