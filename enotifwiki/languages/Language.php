@@ -248,7 +248,6 @@ $wgLanguageNamesEn =& $wgLanguageNames;
 	MAG_LOCALURL             => array( 0,    'LOCALURL:'              ),
 	MAG_LOCALURLE            => array( 0,    'LOCALURLE:'             ),
 	MAG_SERVER               => array( 0,    'SERVER'                 ),
-	MAG_SERVER_EXTERN        => array( 1,    'SERVER_EXTERN'          ),
 	MAG_SERVERNAME           => array( 0,    'SERVERNAME'             ),
 	MAG_SCRIPTPATH           => array( 0,    'SCRIPTPATH'             ),
 	MAG_GRAMMAR              => array( 0,    'GRAMMAR:'               ),
@@ -286,8 +285,6 @@ Note to translators: Do not include this message in the language files you
 submit for inclusion in MediaWiki, it should always be inherited from the
 parent class in order maintain consistency across languages.
 */
-
-'server_extern'	=> '{{SERVER}}',
 'sidebar' => '
 * navigation
 ** mainpage|mainpage
@@ -1316,10 +1313,10 @@ There will be no other notifications in case of further changes unless you visit
 
 --
 To change your watchlist settings, visit
-{{SERVER_EXTERN}}{{localurl:Special:Watchlist/edit}}
+{{SERVER}}{{localurl:Special:Watchlist/edit}}
 
 Feedback and further assistance:
-{{SERVER_EXTERN}}{{localurl:Help:Contents}}',
+{{SERVER}}{{localurl:Help:Contents}}',
 
 # Delete/protect/revert
 #

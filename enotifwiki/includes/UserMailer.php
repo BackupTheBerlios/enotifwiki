@@ -348,7 +348,6 @@ class EmailNotification {
 		global $wgEnotifRevealEditorAddress;
 		global $wgEnotifFromEditor;
 		global $wgNoReplyAddress;
-		global $wgServerName, $wgScript;
 
 		$summary = ($this->summary == '') ? ' - ' : $this->summary;
 		$medit   = ($this->minorEdit) ? wfMsg( 'minoredit' ) : '';
@@ -364,14 +363,12 @@ class EmailNotification {
 		$replyto = ''; /* fail safe */
 		$keys    = array();
 
-		$serverpath = Parser::getVariableValue( MAG_SERVER_EXTERN ) . $wgScript . '/';
-
 		# regarding the use of oldid as an indicator for the last visited version, see also
 		# http://bugzilla.wikipeda.org/show_bug.cgi?id=603 "Delete + undelete cycle doesn't preserve old_id"
 		# However, in the case of a new page which is already watched, we have no previous version to compare
 
 		if( $this->oldid ) {
-			$difflink = $serverpath . $this->title->getPrefixedUrl( 'diff=0&oldid=' . $this->oldid );
+			$difflink = $this->title->getFullUrl( 'diff=0&oldid=' . $this->oldid );
 			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastvisited', $difflink );
 			$keys['$OLDID']   = $this->oldid;
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'changed' );
@@ -386,7 +383,7 @@ class EmailNotification {
 		$pagetitle = $this->title->getPrefixedText();
 
 		$keys['$PAGETITLE']          = $pagetitle;
-		$keys['$PAGETITLE_URL']      = $serverpath . $this->title->getPrefixedUrl();
+		$keys['$PAGETITLE_URL']      = $this->title->getFullUrl();
 
 		$keys['$PAGEMINOREDIT']      = $medit;
 		$keys['$PAGESUMMARY']        = $summary;
@@ -425,10 +422,10 @@ class EmailNotification {
 			$subject = str_replace('$PAGEEDITOR', $name, $subject);
 			$keys['$PAGEEDITOR'] = $name;
 			$emailPage = Title::makeTitle( NS_SPECIAL, 'Emailuser/' . $name );
-			$keys['$PAGEEDITOR_EMAIL'] = $serverpath . $emailPage->getPrefixedUrl();
+			$keys['$PAGEEDITOR_EMAIL'] = $emailPage->getFullUrl();
 		}
 		$userPage = $wgUser->getUserPage();
-		$keys['$PAGEEDITOR_WIKI'] = $serverpath . $userPage->getPrefixedUrl();
+		$keys['$PAGEEDITOR_WIKI'] = $userPage->getFullUrl();
 		$body = strtr( $body, $keys );
 
 		$body = wordwrap( $body, 72 );

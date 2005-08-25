@@ -55,7 +55,6 @@ define('MAG_REVISIONID',		40);
 define('MAG_SCRIPTPATH',		41);
 define('MAG_SERVERNAME',		42);
 define('MAG_NUMBEROFFILES',		43);
-define('MAG_SERVER_EXTERN',		44);
 
 
 $wgVariableIDs = array(
@@ -72,7 +71,6 @@ $wgVariableIDs = array(
 	MAG_SITENAME,
 	MAG_SERVER,
 	MAG_SERVERNAME,
-	MAG_SERVER_EXTERN,
 	MAG_SCRIPTPATH,
 	MAG_PAGENAME,
 	MAG_PAGENAMEE,

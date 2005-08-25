@@ -852,8 +852,8 @@ Es werden solange keine weiteren Benachrichtigungsmails gesendet, bis Sie die Se
              Ihr freundliches {{SITENAME}} Benachrichtigungssystem
 
 ---
-Ihre Beobachtungsliste {{SERVER_EXTERN}}{{localurl:Special:Watchlist/edit}}
-Hilfe zur Benutzung gibt {{SERVER_EXTERN}}{{localurl:WikiHelpdesk}}',
+Ihre Beobachtungsliste {{SERVER}}{{localurl:Special:Watchlist/edit}}
+Hilfe zur Benutzung gibt {{SERVER}}{{localurl:WikiHelpdesk}}',
 
 # Delete/protect/revert
 #
