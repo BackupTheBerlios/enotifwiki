@@ -1183,7 +1183,8 @@ sollte umgehend ein Administrator informiert werden!
 bevor Sie die erweiterten Mailfunktionen benutzen können. Ein Klick auf die Schaltfläche unten sendet eine E-Mail zu Ihnen.
 Diese Mail enthält einen Link mit einem Kode; durch Klicken auf diesen Link bestätigen Sie, dass Ihre Adresse gültig ist.",
 'confirmemail_send' => 'Anforderung einer E-Mail zur Adressenbestätigung',
-'confirmemail_sent' => 'Es wurde eine Mail zur Adressenbestätigung an $1 gesendet.',
+'confirmemail_sent' => 'Es wurde eine Mail zur Adressenbestätigung gesendet.',
+'eauthentsent' => 'Es wurde eine Mail zur Adressenbestätigung an $1 gesendet.',
 'confirmemail_sendfailed' => 'Could not send confirmation mail due to misconfigured server or invalid characters in e-mail address.',
 'confirmemail_invalid' => 'Ungültiger Bestätigungskode. Die Gültigkeitsdauer des Kodes ist eventuell abgelaufen.',
 'confirmemail_success' => 'Ihre E-Mailadresse wurde bestätigt. Sie können sich jetzt einloggen.',

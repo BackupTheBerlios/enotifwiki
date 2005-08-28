@@ -300,9 +300,9 @@ class PreferencesForm {
 							$result = $wgUser->sendConfirmationMail();
 							require_once( 'WikiError.php' );
 							if( WikiError::isError( $result ) ) {
-								$error = wfMsg( 'confirmemail_sendfailed', htmlspecialchars( $result->getMessage() ) );
+								$error = wfMsg( 'mailerror', htmlspecialchars( $result->getMessage() ) );
 							} else {
-								$error = wfMsg( 'confirmemail_sent', $wgUser->getName() );
+								$error = wfMsg( 'eauthentsent', $wgUser->getName() );
 							}
 						}
 					}

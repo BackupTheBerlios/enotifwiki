@@ -209,6 +209,11 @@ function wfSpecialContributions( $par = null ) {
 
 	$id = User::idFromName($nt->getText());
 
+	if ( !$wgUser->isAllowed( 'listcontributions' ) ) {
+		$wgOut->permissionRequired( 'listcontributions' );
+		return;
+	}
+
 	if ( 0 == $id ) {
 		$ul = $nt->getText();
 	} else {
@@ -225,6 +230,8 @@ function wfSpecialContributions( $par = null ) {
 	}
 
 	$wgOut->setSubtitle( wfMsgHtml( 'contribsub', $ul ) );
+
+	wfRunHooks('SpecialContributionsBeforeMainOutput', $id );
 
 	$arr =  $wgContLang->getFormattedNamespaces();
 	$nsform = "<form method='get' action=\"$wgScript\">\n";

@@ -1,3 +1,218 @@
+/*
+ * HIGHLIGHTING SCRIPTLET for highlighting terms on a web page.
+ * -----------------------------------------------------------
+ * This scriptlet is based on the ideas of Julian Robichaux
+ * see http://www.nsftools.com/misc/SearchAndHighlight.htm
+ * and Markus Arndt (March 2005).
+*/
+
+/* Implementation:
+ * Insert eg. this a-tag in your web page:
+ * <a id="highlight" title="Click to open an input box for highlighting terms."
+ * style="cursor: hand;" onclick="SearchAndHighlightPrompt('this and that')" >Highlighting</a>
+ * and include the javascript in the script-section.
+*/
+
+// Global parameters ----------------------------------------------------------
+
+var useCookie = false;
+    /*
+     * When setting the parameter to true, the search term is stored in a cookie
+     * and this cookie will be used as the default text when prompting for terms
+     * which should be highlighted.
+     * However, this does not always work properly as a web page can be served from a cache
+     * including a cached cookie which in this case is not the last modified cookie.
+    */
+
+var warningText = "Sorry, for some reason the text of this page is unavailable. Searching will not work.";
+var warningSingleCharacter = "A single character as a search term is ignored.";
+var promptText  = "Please enter the words you'd like to highlight, separated by spaces:";
+var defaultText = "this and that";
+
+var leftTag  = "<font name='highlight' style='font-weight: bold; color:black; background-color:_c_;'>";
+var rightTag = "</font>";
+
+var unique_left ="_p2q4t4h_";
+var unique_right="_n5x4q9j_";
+
+var colorArray = new Array("yellow", "lightskyblue", "coral", "springgreen", "gainsboro");
+
+
+
+/*
+ * This function inserts before and after the search term a text tag,
+ * the left text tag comprising the color information as an index number.
+*/
+function markSearchTerms(node, pattern, color_no)
+	{
+	if (node.nodeType == 3 /*Node.TEXT_NODE*/)
+		{
+		node.nodeValue=node.nodeValue.replace(pattern, window.unique_left+color_no+"_"+"$1"+window.unique_right, "gi");
+		return true;
+		}
+
+	for(var m = node.firstChild; m != null; m = m.nextSibling) {
+		if (m != document.getElementById('editform')) { // do not apply highliting to the textarea
+			markSearchTerms(m, pattern, color_no);
+		}
+	}
+	return true;
+	}
+
+
+/*
+ * This function replaces the text tags by real html font tags.
+ * Each search term gets its own background color.
+*/
+function doHighlight ()
+	{
+	var pr = new RegExp(window.unique_right, "gi");
+	var text = document.body.innerHTML;
+
+
+	for (var i=0; i<window.colorArray.length; i++)
+		{
+		var pl = new RegExp(window.unique_left+i+"_", "gi");
+		lT = window.leftTag.replace(/_c_/, window.colorArray[i]);
+		text = text.replace(pl, lT);
+		}
+
+	text = text.replace(pr, window.rightTag);
+	document.body.innerHTML = text;
+	return true;
+	}
+
+
+function removeHighlightTags()
+	{
+	var pattern = /<font[^>]*name..highlight[^>]*>([^<]+)<\/font>/gi;
+	var text = document.body.innerHTML;
+
+	text = text.replace(pattern , "$1");
+	document.body.innerHTML = text;
+
+	return true;
+	}
+
+
+function get_defaultText()
+	{
+	if (window.useCookie)
+		{
+		if (document.cookie)
+			{
+			cookieArray = document.cookie.split(";");
+			for (i=0; i<cookieArray.length; i++)
+				{
+				cookie = cookieArray[i].split("=");
+				if (cookie[0]=="hlterms") { defaultText = unescape(cookie[1]); break; }
+				}
+			}
+		}
+	else
+		{
+		defaultText =  window.defaultText;
+		}
+
+	if (!defaultText) defaultText = "";
+
+	return defaultText;
+	}
+
+
+
+
+function store_searchText(searchText)
+	{
+	if (window.useCookie)
+		{
+		var expires = new Date();
+		var today = new Date();
+		expires.setTime(today.getTime()+1000*60*60*24*7); // one week
+
+		searchText = searchText.replace(/^[ ]*/ig, ""); // trim
+		searchText = searchText.replace(/[ ]*$/ig, "");
+
+		var dc = "hlterms="+escape(searchText);  // +"; expires="+escape(expires.toGMTString());
+		document.cookie = dc;
+		}
+	else
+		{
+		window.defaultText = searchText;
+		}
+	}
+
+
+/*
+ * This function creates the regular expression and defines the color index
+ * for each search term. The parameters are passed to the markSearchTerms function.
+*/
+function prepareSearchTerms(searchText)
+	{
+	searchArray = searchText.split(" ");
+
+	if (!document.body || typeof(document.body.innerHTML) == "undefined") {
+	if (warnOnFailure) {
+	alert(window.warningText);
+	}
+	return false;
+	}
+
+	var color_no=0;
+	for (var i = 0; i < searchArray.length; i++) {
+	if (searchArray[i].length>1)  // to avoid problems with some special single characters
+		{
+		// complete words are highlighted, each term is highlighted using a different
+		// background color
+		var pattern = new RegExp ("\\b([\\w]*"+searchArray[i]+"[\\w]*)\\b", "gi");
+		markSearchTerms(document.body, pattern, color_no);
+		color_no++;
+		if (color_no>window.colorArray.length-1) color_no=0;
+		}
+	else alert("\""+searchArray[i]+"\": "+warningSingleCharacter);
+	}
+	return true;
+	}
+
+
+
+/*
+ * -----------------------------------------
+ * Entry point to the highlighting scriptlet
+ * -----------------------------------------
+ * This displays a dialog box that allows a user to enter their own
+ * search terms to highlight on the page.
+ */
+function SearchAndHighlightPrompt(defaultText)
+	{
+
+	defaultText = get_defaultText();
+	searchText = prompt(window.promptText, defaultText+" ");
+	store_searchText(searchText);
+
+	if (searchText!=null)
+		{
+		searchText = searchText.replace(/[ ]+/g, ' '); // remove multiple blanks
+		searchText = searchText.replace(/^[ ]*/, '');  // and trim
+		searchText = searchText.replace(/[ ]*$/, '');
+		}
+
+	if (!searchText)  {
+		removeHighlightTags();
+		return false;
+		}
+
+	// These three lines perform the real work.
+	removeHighlightTags();
+	prepareSearchTerms(searchText);
+	doHighlight();
+
+	return true;
+	}
+
+// end HIGHLIGHTING SCRIPTLET  -----------------------------------------------------------
+
+
 // Wikipedia JavaScript support functions
 // if this is true, the toolbar will no longer overwrite the infobox when you move the mouse over individual items
 var noOverwrite=false;

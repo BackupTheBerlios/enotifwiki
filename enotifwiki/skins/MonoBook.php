@@ -181,6 +181,9 @@ class MonoBookTemplate extends QuickTemplate {
 		    echo htmlspecialchars($this->data['nav_urls']['print']['href'])
 		    ?>"><?php echo $this->msg('printableversion') ?></a></li>
 	      <?php } ?>
+	      <!-- patch highlighting ma 02.03.2005 -->
+	      <li> <a title="Click to open an input box for highlighting terms." style="cursor: hand;" onclick="SearchAndHighlightPrompt('this and that')">Highlight terms</a></li>
+	      <!-- end patch -->
 	    </ul>
 	  </div>
 	</div>

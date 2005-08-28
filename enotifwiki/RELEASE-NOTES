@@ -6,7 +6,7 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 *************************************************************************
 *									*
 *	MediaWiki 1.5 release candidate 3 				*
-*	CVS 200508252145 special edition EnotifWiki 3.52		*
+*	CVS 200508281700 special edition EnotifWiki 3.53		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -174,7 +174,7 @@ Executive summary for the impatient reader:
 * (bug 2126) Unable to set new password after using emailed password (problem confirmed and found; will be fixed in Enotif > 3.25) (OK)
 * (bug 2259) patch for User.php: login with temp.password also indicates that the e-mail address is valid (OK)
 * (bug 2439) e-mail confirmation error message issues solved
-
+* (bug 3294) Introducing new permissionkeys 'listusers' and 'listcontributions'
 
 <TODO> <FIXME>
 * UserMailer.php: The Tim-Starling-improvement of having only one
@@ -184,6 +184,13 @@ Executive summary for the impatient reader:
   (in Recent Changes and Page History views). With the TS-improvement,
   the (notification) time information is no longer exact for the single
   user.
+
+v3.53
+* SearchAndHighlightPromptjavascript added, also to the toolbox menu
+  for search and highlight on screens
+* updated to MediaWiki1.5rc3 / CVS REL1_5 200508281700
+* (bug 3294) Introducing new permissionkeys 'listusers' and 'listcontributions'
+  see DefaultSettings.php
 
 v3.52
 * integrated the RSS feed reader extension from
@@ -1149,8 +1156,6 @@ of MediaWiki:Newpagetext) to &action=edit, if page is new.
 * Fix URL sanitization in HTML attributes, which broke in this branch
 
 
-<<<<<<< RELEASE-NOTES
-=======
 === Changes since 1.5rc2 ===
 
 * Fix upgrade from 1.4 due to version number check breakage
@@ -1158,7 +1163,11 @@ of MediaWiki:Newpagetext) to &action=edit, if page is new.
 * (bug 2108) Sort entries when using category browser
 * XSS issue : now sanitize search query input
 
->>>>>>> 1.353.2.36
+
+=== Changes since 1.5rc3 ===
+* (bug 3280) Respect 'move' group permission on page moves
+
+
 === Caveats ===
 
 Some output, particularly involving user-supplied inline HTML, may not

@@ -2128,13 +2128,13 @@ before using e-mail features. Activate the button below to send a confirmation
 mail to your address. The mail will include a link containing a code; load the
 link in your browser to confirm that your e-mail address is valid.",
 'confirmemail_send' => 'Mail a confirmation code',
-'confirmemail_sent' => 'Confirmation e-mail sent to $1.',
+'confirmemail_sent' => 'Confirmation e-mail sent.',
+'eauthentsent' => 'Confirmation e-mail sent to $1.',
 'confirmemail_sendfailed' => 'Could not send confirmation mail due to misconfigured server or invalid characters in e-mail address. Error sending mail: $1',
 'confirmemail_invalid' => 'Invalid confirmation code. The code may have expired.',
 'confirmemail_success' => 'Your e-mail address has been confirmed. You may now log in and enjoy the wiki.',
 'confirmemail_loggedin' => 'Your e-mail address has now been confirmed.',
 'confirmemail_error' => 'Something went wrong saving your confirmation.',
-
 'confirmemail_subject' => '{{SITENAME}} e-mail address confirmation',
 'confirmemail_body' => "Someone, probably you from IP address $1, has registered an
 account \"$2\" with this e-mail address on {{SITENAME}}.

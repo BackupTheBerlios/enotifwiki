@@ -28,7 +28,7 @@ require_once( 'includes/SiteConfiguration.php' );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.5rc3 (CVS REL1_5 200508252145) special version EnotifWiki v3.52 + FCKeditor 2.0';
+$wgVersion			= '1.5rc3 (CVS REL1_5 200508281700) special version EnotifWiki v3.53 + FCKeditor 2.0';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -704,6 +704,8 @@ $wgGroupPermissions = array();
 $wgGroupPermissions['*'    ]['createaccount']   = true;
 $wgGroupPermissions['*'    ]['read']            = true;
 $wgGroupPermissions['*'    ]['edit']            = true;
+$wgGroupPermissions['*'    ]['listusers']         = true;
+$wgGroupPermissions['*'    ]['listcontributions'] = true;
 
 $wgGroupPermissions['user' ]['move']            = true;
 $wgGroupPermissions['user' ]['read']            = true;
@@ -735,8 +737,6 @@ $wgGroupPermissions['bureaucrat']['renameuser'] = true;
  * server.
  */
 # $wgGroupPermissions['developer']['siteadmin'] = true;
-
-
 
 # Proxy scanner settings
 #
