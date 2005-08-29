@@ -99,5 +99,5 @@ function wfIsIPPublic( $ip ) {
 	}
 	return true;
 }
-	
+
 ?>

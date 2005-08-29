@@ -1,4 +1,3 @@
-
  <?php
  # RSS-Feed Mediawiki extension
  # 
@@ -115,11 +114,11 @@
     if (!is_array($rss->items)) {
         return "<div>Failed to load RSS feed from $url!</div>"; #localize...
     }
- 
-    #Bild title line    
+
+    #Bild title line
     $title= iconv($charset,$wgOutputEncoding,$rss->channel['title']);
-    if ($rss->channel['link']) $title= "<a href='".$rss->channel['link']."'>$title</a>";
-    
+    if ( isset($rss->channel['link']) ) $title= "<a href='".$rss->channel['link']."'>$title</a>";
+
     $output="<h3>$title</h3>";
 
     if ($reverse) $rss->items = array_reverse($rss->items);
