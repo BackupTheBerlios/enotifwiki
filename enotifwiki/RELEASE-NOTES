@@ -6,7 +6,7 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 *************************************************************************
 *									*
 *	MediaWiki 1.5 release candidate 4 				*
-*	CVS 200508301540 special edition EnotifWiki 3.54		*
+*	CVS 200508302300 special edition EnotifWiki 3.55		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -193,6 +193,9 @@ Executive summary for the impatient reader:
 * (bug 2259) patch for User.php: login with temp.password also indicates that the e-mail address is valid (OK)
 * (bug 2439) e-mail confirmation error message issues solved
 * (bug 3294) Introducing new permissionkeys 'listusers' and 'listcontributions'
+* (bug 3305) Timezone set to GMT since update from 1.4.8 to 1.4.9 ($wgLocalTZoffset)
+* (bug 3306) Add a description of "$wgLocalTZoffset = ..." to DefaultSettings.php
+* (bug 3307) small correction in UserMailer.php
 
 <TODO> <FIXME>
 * UserMailer.php: The Tim-Starling-improvement of having only one
@@ -203,12 +206,17 @@ Executive summary for the impatient reader:
   the (notification) time information is no longer exact for the single
   user.
 
-v3.54
-* updated to MediaWiki1.5rc4 / CVS REL1_5 200508301540
+v3.55
+* updated to MediaWiki1.5rc4 / CVS REL1_5 200508302300
 * fixed the html header problem of all previous enotifwiki versions which were caused
   by unsane php files: trailing lines can cause problems, especially with feed=rss
-  output formats (xml)
-* cleaned up rss.php extension file, which had trailing blanks in all lines
+  output formats (xml). Solution: cleaned up rss.php extension file,
+  which had trailing blanks in all lines
+* (bug 3305) Timezone set to GMT since update from 1.4.8 to 1.4.9 ($wgLocalTZoffset) (ok)
+* (bug 3306) Add a description of "$wgLocalTZoffset = ..." to DefaultSettings.php (ok)
+* (bug 3307) small correction in UserMailer.php (ok)
+* in consequence, $wgTimezoneoffsetOverwrite has been dropped.
+  It was introduced by EnotifWiki some time ago.
 
 v3.53
 * SearchAndHighlightPromptjavascript added, also to the toolbox menu

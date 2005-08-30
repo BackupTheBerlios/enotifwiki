@@ -28,7 +28,7 @@ require_once( 'includes/SiteConfiguration.php' );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.5rc4 (CVS REL1_5 200508301540) special version EnotifWiki v3.54 + FCKeditor 2.0';
+$wgVersion			= '1.5rc4 (CVS REL1_5 200508302300) special version EnotifWiki v3.55 + FCKeditor 2.0';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -1408,11 +1408,14 @@ $wgLocaltimezone = null; # Do not change this if your PHP has SAFE MODE enabled
 
 /**
  * Overwrite any time correction setting with this value, if set
- * See also Bugzilla 505
- * Specify timezones by location, to allow automatic adjustments of timeoffset and daylight saving time (DST)
- * This enhancement is not fully programmed yet.
+ * See also Bugzilla 505, 3305, 3306 and
+ * http://meta.wikimedia.org/wiki/MediaWiki_FAQ#How_do_I_set_the_timezone_for_my_MediaWiki.3F
+ *
+ * The value sets an offset for all time values - if the user hasn't set another offset in the
+ * preferences. In other words: this value is effective only, if the user has an empty
+ * timecorrection value
  */
-# $wgTimezoneoffsetOverwrite = '02:00'; # set to false or comment out to disable this
+# $wgLocalTZoffset = '+2'; # set to an integer value or disable it
 
 /**
  * When translating messages with wfMsg(), it is not always clear what should be

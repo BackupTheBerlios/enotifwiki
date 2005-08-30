@@ -459,16 +459,11 @@ class EmailNotification {
 		$body = str_replace( '$WATCHINGUSERNAME', $watchingUser->getName() , $this->body );
 		$body = str_replace( '$WATCHINGUSEREMAILADDR', $watchingUser->getEmail(), $body );
 
-		$timecorrection = $watchingUser->getOption( 'timecorrection' );
-#		if( !$timecorrection ) {
-#			# fail safe - I prefer it. TomGries
-#			$timecorrection = '00:00';
-#		}
 		# $PAGEEDITDATE is the time and date of the page change
 		# expressed in terms of individual local time of the notification
 		# recipient, i.e. watching user
 		$body = str_replace('$PAGEEDITDATE',
-			$wgLang->timeanddate( $this->timestamp, true, false, $timecorrection, true ),
+			$wgLang->timeanddate( $this->timestamp, true, false, $watchingUser->getOption( 'timecorrection' ), true ),
 			$body);
 
 		$error = userMailer( $to, $this->from, $this->subject, $body, $this->replyto );

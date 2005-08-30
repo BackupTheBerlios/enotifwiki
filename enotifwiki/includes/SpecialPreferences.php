@@ -571,7 +571,7 @@ class PreferencesForm {
 				"<input type='text' name='wpNick' value=\"{$this->mNick}\" size='25' />"
 			) .
 			# FIXME: The <input> part should be where the &nbsp; is, getToggle() needs
-			# to be changed to out return its output in two parts. -ævar
+			# to be changed to out return its output in two parts. -??var
 			$this->addRow(
 				'&nbsp;',
 				$this->getToggle( 'fancysig' )
@@ -724,7 +724,7 @@ class PreferencesForm {
 			$imageLimitOptions = null;
 			foreach ( $wgImageLimits as $index => $limits ) {
 				$selected = ($index == $this->mImageSize) ? 'selected="selected"' : '';
-				$imageLimitOptions .= "<option value=\"{$index}\" {$selected}>{$limits[0]}×{$limits[1]}". wfMsgHtml('unit-pixel') ."</option>\n";
+				$imageLimitOptions .= "<option value=\"{$index}\" {$selected}>{$limits[0]}??{$limits[1]}". wfMsgHtml('unit-pixel') ."</option>\n";
 			}
 
 			$imageThumbOptions = null;
@@ -754,27 +754,18 @@ class PreferencesForm {
 		$nowlocal = $wgLang->time( $now = wfTimestampNow(), true );
 		$nowserver = $wgLang->time( $now, false );
 
-		global $wgTimezoneoffsetOverwrite;
-		if ( !isset($wgTimezoneoffsetOverwrite) ) {
-			$Timezoneoffsetinput = $this->addRow(
-				wfMsg( 'timezoneoffset' ),
-				"<input type='text' name='wpHourDiff' value=\"" . htmlspecialchars( $this->mHourDiff ) . "\" size='6' />"
-				) . "<tr><td colspan='2'>
-				<input type='button' value=\"" . wfMsg( 'guesstimezone' ) ."\"
-				onclick='javascript:guessTimezone()' id='guesstimezonebutton' style='display:none;' />
-				</td></tr></table>";
-		} else {
-			$Timezoneoffsetinput = $this->addRow(
-				wfMsg( 'timezoneoffset' ),
-				$wgTimezoneoffsetOverwrite . ' ' . wfMsg( 'fixed' ) ) .
-				"</table>";
-		}
 		$wgOut->addHTML( '<fieldset><legend>' . wfMsg( 'timezonelegend' ) . '</legend><table>' .
 		 	$this->addRow( wfMsg( 'servertime' ), $nowserver ) .
 			$this->addRow( wfMsg( 'localtime' ), $nowlocal ) .
-			$Timezoneoffsetinput .
-			"<div class='prefsectiontip'>¹" .  wfMsg( 'timezonetext' ) . '</div>' .
-			"</fieldset>\n\n" );
+			$this->addRow(
+				wfMsg( 'timezoneoffset' ),
+				"<input type='text' name='wpHourDiff' value=\"" . htmlspecialchars( $this->mHourDiff ) . "\" size='6' />"
+			) . "<tr><td colspan='2'>
+				<input type='button' value=\"" . wfMsg( 'guesstimezone' ) ."\"
+				onclick='javascript:guessTimezone()' id='guesstimezonebutton' style='display:none;' />
+				</td></tr></table>
+			<div class='prefsectiontip'>¹" .  wfMsg( 'timezonetext' ) . "</div>
+		</fieldset>\n\n" );
 
 		# Editing
 		#

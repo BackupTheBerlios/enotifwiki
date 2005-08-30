@@ -1257,12 +1257,6 @@ class User {
 				$this->mOptions[$m[1]] = $m[2];
 			}
 		}
-
-		global $wgTimezoneoffsetOverwrite;
-		if ( isset($wgTimezoneoffsetOverwrite) & ( $this->mOptions[ 'timecorrection' ] != $wgTimezoneoffsetOverwrite ) ) {
-			$this->mOptions[ 'timecorrection' ] = $wgTimezoneoffsetOverwrite;
-		}
-
 	}
 
 	function setCookies() {
