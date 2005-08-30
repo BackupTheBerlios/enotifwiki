@@ -460,10 +460,10 @@ class EmailNotification {
 		$body = str_replace( '$WATCHINGUSEREMAILADDR', $watchingUser->getEmail(), $body );
 
 		$timecorrection = $watchingUser->getOption( 'timecorrection' );
-		if( !$timecorrection ) {
-			# fail safe - I prefer it. TomGries
-			$timecorrection = '00:00';
-		}
+#		if( !$timecorrection ) {
+#			# fail safe - I prefer it. TomGries
+#			$timecorrection = '00:00';
+#		}
 		# $PAGEEDITDATE is the time and date of the page change
 		# expressed in terms of individual local time of the notification
 		# recipient, i.e. watching user

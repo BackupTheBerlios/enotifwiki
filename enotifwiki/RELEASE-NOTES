@@ -5,8 +5,8 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 
 *************************************************************************
 *									*
-*	MediaWiki 1.5 release candidate 3 				*
-*	CVS 200508281700 special edition EnotifWiki 3.53		*
+*	MediaWiki 1.5 release candidate 4 				*
+*	CVS 200508301540 special edition EnotifWiki 3.54		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -35,6 +35,24 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 *  	and see section in the release notes below			*
 *									*
 *************************************************************************
+
+== MediaWiki 1.5 release candidate 4 ==
+
+August 29, 2005
+
+MediaWiki 1.5rc4 is a preview release of the new 1.5 release series.
+It fixes compatibility with PHP 5.1, and corrects two cross-site scripting
+security bugs:
+
+* <math> tags were handled incorrectly when TeX rendering support is off,
+  as in the default configuration.
+* Extension or <nowiki> sections in Wiki table syntax could bypass HTML
+  style attribute restrictions for cross-site scripting attacks against
+  Microsoft Internet Explorer
+
+Wikis where the optional math support has been *enabled* are not vulnerable
+to the first, but are vulnerable to the second.
+
 
 == MediaWiki 1.5 release candidate 3 ==
 
@@ -184,6 +202,13 @@ Executive summary for the impatient reader:
   (in Recent Changes and Page History views). With the TS-improvement,
   the (notification) time information is no longer exact for the single
   user.
+
+v3.54
+* updated to MediaWiki1.5rc4 / CVS REL1_5 200508301540
+* fixed the html header problem of all previous enotifwiki versions which were caused
+  by unsane php files: trailing lines can cause problems, especially with feed=rss
+  output formats (xml)
+* cleaned up rss.php extension file, which had trailing blanks in all lines
 
 v3.53
 * SearchAndHighlightPromptjavascript added, also to the toolbox menu
@@ -1166,6 +1191,9 @@ of MediaWiki:Newpagetext) to &action=edit, if page is new.
 
 === Changes since 1.5rc3 ===
 * (bug 3280) Respect 'move' group permission on page moves
+* (bug 2885) More PHP 5.1 fixes: skin, search, log, undelete
+* Security fix for <math>
+* Security fix for tables
 
 
 === Caveats ===

@@ -28,7 +28,7 @@ require_once( 'includes/SiteConfiguration.php' );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.5rc3 (CVS REL1_5 200508281700) special version EnotifWiki v3.53 + FCKeditor 2.0';
+$wgVersion			= '1.5rc4 (CVS REL1_5 200508301540) special version EnotifWiki v3.54 + FCKeditor 2.0';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -1413,7 +1413,6 @@ $wgLocaltimezone = null; # Do not change this if your PHP has SAFE MODE enabled
  * This enhancement is not fully programmed yet.
  */
 # $wgTimezoneoffsetOverwrite = '02:00'; # set to false or comment out to disable this
-
 
 /**
  * When translating messages with wfMsg(), it is not always clear what should be

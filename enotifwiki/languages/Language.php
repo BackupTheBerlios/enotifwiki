@@ -54,6 +54,9 @@ if(isset($wgExtraNamespaces)) {
    These are the option settings for new accounts.
    They differ from the option settings in original MediaWiki releases */
 
+/* Do not set any value, otherwise $wgLocalTZoffset cannot work
+	'timecorrection' 	=> '00:00' */
+
 /* private */ $wgDefaultUserOptionsEn = array(
 	'quickbar' 		=> 1,
 	'underline' 		=> 0,
@@ -75,7 +78,6 @@ if(isset($wgExtraNamespaces)) {
 	'showtoc'		=> 1,
  	'showtoolbar' 		=> 1,
 	'date' 			=> 0,
-	'timecorrection' 	=> '00:00',
 	'imagesize' 		=> 2,
 	'thumbsize'		=> 2,
 	'rememberpassword' 	=> 1,

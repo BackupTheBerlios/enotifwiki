@@ -1,4 +1,4 @@
-<?
+<?php
 /* The ImageLink extension allows to define a link for an image:
  *
  *<imagelink>mediawiki.png|http://www.mediawiki.org/|MediaWiki</imagelink>
@@ -64,4 +64,3 @@ function formatImageLink( $imageName, $linkTarget, $altText ) {
 }
 
 ?>
-

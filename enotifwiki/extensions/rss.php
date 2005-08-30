@@ -1,50 +1,50 @@
- <?php
- # RSS-Feed Mediawiki extension
- # 
- # original by mutante 25.03.2005
- # extended by Duesentrieb 30.04.2005
- # extended by Rdb78 07.07.2005
- # extended by Mafs  10.07.2005
- #
- # Requires: 
- #  * magpie rss parser <http://magpierss.sourceforge.net/>
- #  * iconv <http://www.gnu.org/software/libiconv/>, see also <http://www.php.net/iconv>
- #
- # Installation:
- #  * put this file (rss.php) into the extension directory of your mediawiki installation 
- #  * add the following to the end of LocalSettings.php: include("extensions/rss.php");
- #  * make sure magpie can be found by PHP.
- #
- # Usage:
- #  Use one section between <rss>-tags for each feed. The ress section may contain parameters
- #  separated by a pipe ("|"), just like links and templates. Two parameters are supported:
- #    * charset=...             The charset used by the feed. iconv is used to convert this.
- #    * short                   Do not show the description text for each news item.
- #    * max=x                   Shows x most recent headlines.
- #    * highlight= term1 term2  The terms separated by a space are highlighted.
- #    * filter= term1 term2     Show only rss items containing at least one of the terms.
- #
- # Example: 
- #    <rss>http://slashdot.org/slashdot.rss|charset=UTF-8|short|max=5</rss>
- #
+<?php
+# RSS-Feed Mediawiki extension
+# 
+# original by mutante 25.03.2005
+# extended by Duesentrieb 30.04.2005
+# extended by Rdb78 07.07.2005
+# extended by Mafs  10.07.2005
+#
+# Requires: 
+#  * magpie rss parser <http://magpierss.sourceforge.net/>
+#  * iconv <http://www.gnu.org/software/libiconv/>, see also <http://www.php.net/iconv>
+#
+# Installation:
+#  * put this file (rss.php) into the extension directory of your mediawiki installation 
+#  * add the following to the end of LocalSettings.php: include("extensions/rss.php");
+#  * make sure magpie can be found by PHP.
+#
+# Usage:
+#  Use one section between <rss>-tags for each feed. The ress section may contain parameters
+#  separated by a pipe ("|"), just like links and templates. Two parameters are supported:
+#    * charset=...             The charset used by the feed. iconv is used to convert this.
+#    * short                   Do not show the description text for each news item.
+#    * max=x                   Shows x most recent headlines.
+#    * highlight= term1 term2  The terms separated by a space are highlighted.
+#    * filter= term1 term2     Show only rss items containing at least one of the terms.
+#
+# Example: 
+#    <rss>http://slashdot.org/slashdot.rss|charset=UTF-8|short|max=5</rss>
+#
  
  
- #change this according to your magpie installation!
- require_once('extensions/magpierss/rss_fetch.inc'); 
- 
- #install extension hook
- $wgExtensionFunctions[] = "wfRssExtension"; 
- 
- #extension hook callback function
- function wfRssExtension() { 
+#change this according to your magpie installation!
+require_once('extensions/magpierss/rss_fetch.inc'); 
+
+#install extension hook
+$wgExtensionFunctions[] = "wfRssExtension"; 
+
+#extension hook callback function
+function wfRssExtension() { 
     global $wgParser;
-    
-    #install parser hook for <rss> tags
+
+#install parser hook for <rss> tags
     $wgParser->setHook( "rss", "renderRss" );
- }
+}
   
- #parser hook callback function
- function renderRss( $input ) {
+#parser hook callback function
+function renderRss( $input ) {
 
     global $wgOutputEncoding;
 
@@ -219,10 +219,10 @@
 
     return $output;
 
- }
+}
  
 
- function wfRssFilter ($text, $rssFilter) {
+function wfRssFilter ($text, $rssFilter) {
 	
  	$display = true;
 
@@ -237,10 +237,10 @@
 		}
 	}
 	return $display;
- }
+}
 
  
- function wfRssHighlight($text, $rssHighlight) {
+function wfRssHighlight($text, $rssHighlight) {
  
 	$i=0;
 	$starttag = "v8x5u3t3u8h";
@@ -270,6 +270,5 @@
 		}
 	
 	return $text;
- }
- 
- ?>
+}
+?>
