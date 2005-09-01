@@ -571,7 +571,7 @@ class PreferencesForm {
 				"<input type='text' name='wpNick' value=\"{$this->mNick}\" size='25' />"
 			) .
 			# FIXME: The <input> part should be where the &nbsp; is, getToggle() needs
-			# to be changed to out return its output in two parts. -??var
+			# to be changed to out return its output in two parts. -ævar
 			$this->addRow(
 				'&nbsp;',
 				$this->getToggle( 'fancysig' )
@@ -724,7 +724,7 @@ class PreferencesForm {
 			$imageLimitOptions = null;
 			foreach ( $wgImageLimits as $index => $limits ) {
 				$selected = ($index == $this->mImageSize) ? 'selected="selected"' : '';
-				$imageLimitOptions .= "<option value=\"{$index}\" {$selected}>{$limits[0]}??{$limits[1]}". wfMsgHtml('unit-pixel') ."</option>\n";
+				$imageLimitOptions .= "<option value=\"{$index}\" {$selected}>{$limits[0]}×{$limits[1]}". wfMsgHtml('unit-pixel') ."</option>\n";
 			}
 
 			$imageThumbOptions = null;

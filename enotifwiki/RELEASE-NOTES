@@ -6,7 +6,7 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 *************************************************************************
 *									*
 *	MediaWiki 1.5 release candidate 4 				*
-*	CVS 200508302300 special edition EnotifWiki 3.55		*
+*	CVS 200509011940 special edition EnotifWiki 3.55		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -205,6 +205,14 @@ Executive summary for the impatient reader:
   (in Recent Changes and Page History views). With the TS-improvement,
   the (notification) time information is no longer exact for the single
   user.
+
+v3.56
+* changed $wgNamespacesWithSubpages and $wgNamespacesToBeSearchedDefault defaults
+  subpages are allowed in the main (article) namespace; the major namespaces
+  are searched by default. Details see DefaultSettings.php
+  (bug 3322) Subpage links not working (wontfix; invalid)
+* Two typos in SpecialPreferences.php corrected
+* REL1_5 CVS 200509011940
 
 v3.55
 * updated to MediaWiki1.5rc4 / CVS REL1_5 200508302300

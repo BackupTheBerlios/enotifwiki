@@ -28,7 +28,7 @@ require_once( 'includes/SiteConfiguration.php' );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.5rc4 (CVS REL1_5 200508302300) special version EnotifWiki v3.55 + FCKeditor 2.0';
+$wgVersion			= '1.5rc4 (CVS REL1_5 200509011940) special version EnotifWiki v3.56 + FCKeditor 2.0';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -1050,6 +1050,7 @@ $wgPasswordSalt = true;
  * See Language.php for a list of namespaces.
  */
 $wgNamespacesWithSubpages = array(
+	NS_MAIN		  => true,
 	NS_TALK           => true,
  	NS_USER           => true,
  	NS_USER_TALK      => true,
@@ -1062,7 +1063,12 @@ $wgNamespacesWithSubpages = array(
  );
 
 $wgNamespacesToBeSearchedDefault = array(
-	NS_MAIN           => true,
+	NS_MAIN		  => true,
+	NS_TALK           => true,
+ 	NS_USER           => true,
+ 	NS_USER_TALK      => true,
+ 	NS_HELP		  => true,
+ 	NS_HELP_TALK      => true
 );
 
 /** If set, a bold ugly notice will show up at the top of every page. */
