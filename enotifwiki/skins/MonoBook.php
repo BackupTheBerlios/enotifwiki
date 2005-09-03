@@ -69,8 +69,23 @@ class MonoBookTemplate extends QuickTemplate {
     <?php if($this->data['userjs'    ]) { ?><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('userjs'    ) ?>"></script><?php } ?>
     <?php if($this->data['userjsprev']) { ?><script type="<?php $this->text('jsmimetype') ?>"><?php      $this->html('userjsprev') ?></script><?php   } ?>
     <?php if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
+
+    <?php if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
+    <?php global $wgGmapKey, $wgGmapSource; if (preg_match("/class=\"googleMap\"/i", $this->data['bodytext'], $result_preg_match)) { ?>
+    <!-- gmap -->
+    <script src="<?php echo ($wgGmapSource.$wgGmapKey);?>" type="<?php $this->text('jsmimetype') ?>"></script>
+    <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/gmap.js"></script>
+    <!-- gmap --> <?php } ?>
   </head>
-  <body <?php if($this->data['body_ondblclick']) { ?>ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
+    <?php if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
+    <!-- gmap -->
+    <?php global $wgGmapKey, $wgGmapSource; if (preg_match("/class=\"googleMap\"/i", $this->data['bodytext'], $result_preg_match)) { ?>
+    <script src="<?php echo ($wgGmapSource.$wgGmapKey);?>" type="<?php $this->text('jsmimetype') ?>"></script>
+    <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/gmap.js"></script>
+    <!-- gmap --> <?php } ?>
+  </head>
+  <body <?php if (preg_match("/class=\"googleMap\"/i", $this->data['bodytext'], $result_preg_match)) { ?> onLoad="renderMaps()" <?php } ?>
+        <?php if($this->data['body_ondblclick']) { ?>ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
         <?php if($this->data['body_onload'    ]) { ?>onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
         <?php if($this->data['nsclass'        ]) { ?>class="<?php      $this->text('nsclass')         ?>"<?php } ?>>
     <div id="globalWrapper">

@@ -1083,6 +1083,12 @@ function writeLocalSettings( $conf ) {
 \$wgEditorHeight = \"400\"; # and this window size";
 	} else $editor = '';
 
+	$gmap="## GoogleMap extension
+## see http://meta.wikimedia.org/wiki/User:Mafs/GoogleMapExtension
+require_once('extensions/gmap.php');
+\$wgGmapKey = '<add your google map key here>';
+\$wgGmapSource = 'http://maps.google.com/maps?file=api&v=1&key=';";
+
 	$file = @fopen( "/dev/urandom", "r" );
 	if ( $file ) {
 		$secretKey = bin2hex( fread( $file, 32 ) );
@@ -1212,6 +1218,7 @@ if ( \$wgCommandLineMode ) {
 \$wgDiff3 = \"{$slconf['diff3']}\";
 
 $editor
+$gmap
 ## extension allows <imagelink>internalimage.png|internal_or_external_link|alt_text</imagelink>
 include(\"extensions/ImageLink.php\");
 include(\"extensions/rss.php\");

@@ -6,7 +6,7 @@ setting since version 1.2.0. If you have it on, turn it *off* if you can.
 *************************************************************************
 *									*
 *	MediaWiki 1.5 release candidate 4 				*
-*	CVS 200509011940 special edition EnotifWiki 3.55		*
+*	CVS 200509032000 special edition EnotifWiki 3.56		*
 *									*
 *	Experimental version which includes WYSIWYG FCKeditor 2.0	*
 *	for pages having __USE_EDITOR__ on it				*
@@ -212,7 +212,8 @@ v3.56
   are searched by default. Details see DefaultSettings.php
   (bug 3322) Subpage links not working (wontfix; invalid)
 * Two typos in SpecialPreferences.php corrected
-* REL1_5 CVS 200509011940
+* MediaWiki1.5rc4 REL1_5 CVS 200509032000
+* added gmap extension (still experimental)
 
 v3.55
 * updated to MediaWiki1.5rc4 / CVS REL1_5 200508302300
@@ -1210,6 +1211,13 @@ of MediaWiki:Newpagetext) to &action=edit, if page is new.
 * (bug 2885) More PHP 5.1 fixes: skin, search, log, undelete
 * Security fix for <math>
 * Security fix for tables
+
+
+=== Changes since 1.5rc4 ===
+
+* (bug 3292) Fix move-over-redirect test when current entries are not plaintext
+* (bug 2078) Don't hide watch tab on preview
+* (bug 3306) Document $wgLocalTZoffset
 
 
 === Caveats ===

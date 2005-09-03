@@ -28,7 +28,7 @@ require_once( 'includes/SiteConfiguration.php' );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.5rc4 (CVS REL1_5 200509011940) special version EnotifWiki v3.56 + FCKeditor 2.0';
+$wgVersion			= '1.5rc4 (CVS REL1_5 200509032000) special version EnotifWiki v3.56 + FCKeditor 2.0';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -1405,6 +1405,9 @@ $wgBrowserBlackList = array(
  * Fake out the timezone that the server thinks it's in. This will be used for
  * date display and not for what's stored in the DB. Leave to null to retain
  * your server's OS-based timezone value. This is the same as the timezone.
+ *
+ * This variable is currently used ONLY for signature formatting, not for
+ * anything else.
  */
 # $wgLocaltimezone = 'GMT';
 # $wgLocaltimezone = 'PST8PDT';
@@ -1412,16 +1415,31 @@ $wgBrowserBlackList = array(
 # $wgLocaltimezone = 'CET';
 $wgLocaltimezone = null; # Do not change this if your PHP has SAFE MODE enabled
 
+
 /**
- * Overwrite any time correction setting with this value, if set
+ * Set an offset from UTC in hours to use for the default timezone setting
+ * for anonymous users and new user accounts.
+ *
+ * This setting is used for most date/time displays in the software, and is
+ * overrideable in user preferences. It is *not* used for signature timestamps.
+ *
+ * You can set it to match the configured server timezone like this:
+ *   $wgLocalTZoffset = date("Z") / 3600;
+ *
+ * If your server is not configured for the timezone you want, you can set
+ * this in conjunction with the signature timezone and override the TZ
+ * environment variable like so:
+ *   $wgLocaltimezone="Europe/Berlin";
+ *   putenv("TZ=$wgLocaltimezone");
+ *   $wgLocalTZoffset = date("Z") / 3600;
+ *
  * See also Bugzilla 505, 3305, 3306 and
  * http://meta.wikimedia.org/wiki/MediaWiki_FAQ#How_do_I_set_the_timezone_for_my_MediaWiki.3F
  *
- * The value sets an offset for all time values - if the user hasn't set another offset in the
- * preferences. In other words: this value is effective only, if the user has an empty
- * timecorrection value
+ * Leave at NULL to show times in universal time (UTC/GMT).
  */
-# $wgLocalTZoffset = '+2'; # set to an integer value or disable it
+$wgLocalTZoffset = null;
+
 
 /**
  * When translating messages with wfMsg(), it is not always clear what should be

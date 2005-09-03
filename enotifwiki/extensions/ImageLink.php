@@ -8,9 +8,9 @@
  * http://meta.wikimedia.org/wiki/Write_your_own_MediaWiki_extension
  */
 
-$wgExtensionFunctions[] = "wfSetupImageLink";
+$wgExtensionFunctions[] = "wfImageLinkExtension";
 
-function wfSetupImageLink() {
+function wfImageLinkExtension() {
 	global $wgParser;
  	$wgParser->setHook( 'imagelink', 'imageLinkHandler' );
 }
